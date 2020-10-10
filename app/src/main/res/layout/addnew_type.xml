@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_margin="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/title"
+            android:textSize="@dimen/_16ssp"
+            android:textColor="@color/colorTextPrimary"
+            android:text="@string/add_new"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/close"
+            android:src="@drawable/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tint="@color/colorTextPrimary" />
+
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/income"
+            android:checked="true"
+            android:textSize="@dimen/_14ssp"
+            android:layout_margin="@dimen/_10sdp"
+            android:text="@string/income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/outcome"
+            android:textSize="@dimen/_14ssp"
+            android:layout_margin="@dimen/_10sdp"
+            android:text="@string/outcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/type"
+            android:inputType="text"
+            android:layout_margin="@dimen/_15sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/_13ssp"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/corner_bound"
+            android:textColorHint="@color/colorTextSecondary"
+            android:hint="@string/type"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            tools:ignore="Autofill" />
+        <TextView
+            android:background="@color/colorWhite"
+            android:layout_marginRight="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintTop_toTopOf="@id/type"
+            app:layout_constraintBottom_toTopOf="@id/type"
+            android:textColor="@color/colorTextPrimary"
+            android:text="@string/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="RtlHardcoded" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_margin="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@color/colorTextSecondary"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorWhite"
+            android:text="@string/delete"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/ok"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorWhite"
+            android:text="@string/insert"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

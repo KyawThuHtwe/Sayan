@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#3700B3</color>
+    <color name="colorTextPrimary">#070707</color>
+    <color name="colorTextSecondary">#989696</color>
+    <color name="colorKs">#0BBD14</color>
+    <color name="colorWhite">#fff</color>
+    <color name="colorTransparent">@android:color/transparent</color>
+    <color name="colorIncome">#178A17</color>
+    <color name="colorOutcome">#B1092B</color>
+    <color name="colorProfit">#A38812</color>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout">
+    <androidx.cardview.widget.CardView
+        android:layout_margin="0dp"
+        app:cardCornerRadius="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:id="@+id/progress"
+                android:max="1000"
+                android:progress="100"
+                android:scaleY="50"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"/>
+            <TextView
+                android:id="@+id/type"
+                android:paddingLeft="@dimen/_10sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorTextPrimary"
+                android:text="@string/type"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp"/>
+
+</LinearLayout>
