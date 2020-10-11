@@ -4,19 +4,23 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cu.sayan.Database.DatabaseHelper;
+import com.cu.sayan.Font.Rabbit;
 import com.cu.sayan.R;
 
 import java.util.ArrayList;
@@ -84,6 +88,27 @@ public class UpdateActivity extends AppCompatActivity {
                 update(get_id,get_category,type.getText().toString(),title.getText().toString(),amount.getText().toString(),get_date);
             }
         });
+        if(!isZawgyiFont()){
+            TextView t1=findViewById(R.id.t1);
+            TextView t2=findViewById(R.id.t2);
+            TextView t3=findViewById(R.id.t3);
+            TextView t4=findViewById(R.id.t4);
+            TextView t5=findViewById(R.id.t5);
+            TextView t6=findViewById(R.id.t6);
+            RadioButton income=findViewById(R.id.income);
+            RadioButton outcome=findViewById(R.id.outcome);
+            t1.setText(Rabbit.zg2uni(t1.getText().toString()));
+            t2.setText(Rabbit.zg2uni(t2.getText().toString()));
+            t3.setText(Rabbit.zg2uni(t3.getText().toString()));
+            t4.setText(Rabbit.zg2uni(t4.getText().toString()));
+            t5.setText(Rabbit.zg2uni(t5.getText().toString()));
+            t6.setText(Rabbit.zg2uni(t6.getText().toString()));
+            income.setText(Rabbit.zg2uni(income.getText().toString()));
+            outcome.setText(Rabbit.zg2uni(outcome.getText().toString()));
+            date.setText(Rabbit.zg2uni(date.getText().toString()));
+            title.setHint(Rabbit.zg2uni(title.getHint().toString()));
+            insert.setText(Rabbit.zg2uni(insert.getText().toString()));
+        }
     }
     public String monthChange(int ch){
         String change=null;
@@ -151,5 +176,8 @@ public class UpdateActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();
         }
     }
-
+    public boolean isZawgyiFont(){
+        SharedPreferences preferences= getSharedPreferences("Font", Context.MODE_PRIVATE);
+        return preferences.getBoolean("Font",true);
+    }
 }

@@ -1,17 +1,19 @@
 package com.cu.sayan.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.cu.sayan.Adapter.ProfitAdapter;
 import com.cu.sayan.Adapter.ReportAdapter;
 import com.cu.sayan.Database.DatabaseHelper;
+import com.cu.sayan.Font.Rabbit;
 import com.cu.sayan.Model.TypeData;
 import com.cu.sayan.R;
 
@@ -51,10 +54,9 @@ public class DashboardFragment extends Fragment {
     TextView total,profit;
     boolean monthly=true;
 
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
-    public View onCreateView(@NonNull LayoutInflater inflater,
+    public View onCreateView(@NonNull final LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         profit=view.findViewById(R.id.profit);
@@ -63,6 +65,31 @@ public class DashboardFragment extends Fragment {
         to=view.findViewById(R.id.to);
         showHide=view.findViewById(R.id.showHide);
         layout=view.findViewById(R.id.layout);
+        if(!isZawgyiFont()){
+            for(int i=0;i<months.length;i++){
+                months[i]=Rabbit.zg2uni(months[i]);
+            }
+            for(int i=0;i<years.length;i++){
+                years[i]=Rabbit.zg2uni(years[i]);
+            }
+            TextView sayan=view.findViewById(R.id.sayan);
+            TextView t1=view.findViewById(R.id.t1);
+            TextView t2=view.findViewById(R.id.t2);
+            RadioButton monthly=view.findViewById(R.id.monthly);
+            RadioButton yearly=view.findViewById(R.id.yearly);
+            RadioButton income=view.findViewById(R.id.income);
+            RadioButton outcome=view.findViewById(R.id.outcome);
+            sayan.setText(Rabbit.zg2uni(sayan.getText().toString()));
+            monthly.setText(Rabbit.zg2uni(monthly.getText().toString()));
+            yearly.setText(Rabbit.zg2uni(yearly.getText().toString()));
+            income.setText(Rabbit.zg2uni(income.getText().toString()));
+            outcome.setText(Rabbit.zg2uni(outcome.getText().toString()));
+            submit.setText(Rabbit.zg2uni(submit.getText().toString()));
+            t1.setText(Rabbit.zg2uni(t1.getText().toString()));
+            t2.setText(Rabbit.zg2uni(t2.getText().toString()));
+            to.setText(Rabbit.zg2uni(to.getText().toString()));
+        }
+
         hide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +121,11 @@ public class DashboardFragment extends Fragment {
                         spinner(true);
                         selectSpinner(month,year);
                         recyclerView.setAdapter(null);
-                        total.setText("၀"+"က်ပ္");
+                        if(!isZawgyiFont()){
+                            total.setText("၀"+Rabbit.zg2uni("က်ပ္"));
+                        }else {
+                            total.setText("၀"+"က်ပ္");
+                        }
                         to.setVisibility(View.GONE);
                         profit.setVisibility(View.GONE);
                         recyclerView1.setAdapter(null);
@@ -103,7 +134,11 @@ public class DashboardFragment extends Fragment {
                         monthly=false;
                         spinner(false);
                         recyclerView.setAdapter(null);
-                        total.setText("၀"+"က်ပ္");
+                        if(!isZawgyiFont()){
+                            total.setText("၀"+Rabbit.zg2uni("က်ပ္"));
+                        }else {
+                            total.setText("၀"+"က်ပ္");
+                        }
                         to.setVisibility(View.VISIBLE);
                         profit.setVisibility(View.GONE);
                         recyclerView1.setAdapter(null);
@@ -117,19 +152,38 @@ public class DashboardFragment extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.income:
-                        refreshData("ဝင္ေငြ",month,year);
-                        if(monthly){
-                            totalMonthly("ဝင္ေငြ",month,year);
+                        if(!isZawgyiFont()){
+                            refreshData(Rabbit.zg2uni("ဝင္ေငြ"),month,year);
+                            if(monthly){
+                                totalMonthly(Rabbit.zg2uni("ဝင္ေငြ"),month,year);
+                            }else {
+                                totalYearly(Rabbit.zg2uni("ဝင္ေငြ"),month,year);
+                            }
                         }else {
-                            totalYearly("ဝင္ေငြ",month,year);
+                            refreshData("ဝင္ေငြ",month,year);
+                            if(monthly){
+                                totalMonthly("ဝင္ေငြ",month,year);
+                            }else {
+                                totalYearly("ဝင္ေငြ",month,year);
+                            }
                         }
+
                         break;
                     case R.id.outcome:
-                        refreshData("ထြက္ေငြ",month,year);
-                        if(monthly){
-                            totalMonthly("ထြက္ေငြ",month,year);
+                        if(!isZawgyiFont()){
+                            refreshData(Rabbit.zg2uni("ထြက္ေငြ"),month,year);
+                            if(monthly){
+                                totalMonthly(Rabbit.zg2uni("ထြက္ေငြ"),month,year);
+                            }else {
+                                totalYearly(Rabbit.zg2uni("ထြက္ေငြ"),month,year);
+                            }
                         }else {
-                            totalYearly("ထြက္ေငြ",month,year);
+                            refreshData("ထြက္ေငြ",month,year);
+                            if(monthly){
+                                totalMonthly("ထြက္ေငြ",month,year);
+                            }else {
+                                totalYearly("ထြက္ေငြ",month,year);
+                            }
                         }
                         break;
                 }
@@ -141,24 +195,45 @@ public class DashboardFragment extends Fragment {
         recyclerView1=view.findViewById(R.id.recyclerView1);
         recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        refreshData("ဝင္ေငြ",month,year);
-        if(monthly){
-            totalMonthly("ဝင္ေငြ",month,year);
+        if(!isZawgyiFont()){
+            refreshData(Rabbit.zg2uni("ဝင္ေငြ"),month,year);
+            if(monthly){
+                totalMonthly(Rabbit.zg2uni("ဝင္ေငြ"),month,year);
+            }else {
+                totalYearly(Rabbit.zg2uni("ဝင္ေငြ"),month,year);
+            }
         }else {
-            totalYearly("ဝင္ေငြ",month,year);
+            refreshData("ဝင္ေငြ",month,year);
+            if(monthly){
+                totalMonthly("ဝင္ေငြ",month,year);
+            }else {
+                totalYearly("ဝင္ေငြ",month,year);
+            }
         }
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int month_s=getMonth(monthSpinner.getSelectedItem()+"");
-                int year_s= getYear(yearSpinner.getSelectedItem()+"");
-                refreshData("ဝင္ေငြ",month_s,year_s);
-                if(monthly){
-                    totalMonthly("ဝင္ေငြ",month_s,year_s);
+                if(!isZawgyiFont()){
+                    int month_s=getMonth(Rabbit.uni2zg(monthSpinner.getSelectedItem()+""));
+                    int year_s= getYear(Rabbit.uni2zg(yearSpinner.getSelectedItem()+""));
+                    refreshData(Rabbit.zg2uni("ဝင္ေငြ"),month_s,year_s);
+                    if(monthly){
+                        totalMonthly(Rabbit.zg2uni("ဝင္ေငြ"),month_s,year_s);
+                    }else {
+                        totalYearly(Rabbit.zg2uni("ဝင္ေငြ"),month_s,year_s);
+                    }
                 }else {
-                    totalYearly("ဝင္ေငြ",month_s,year_s);
+                    int month_s=getMonth(monthSpinner.getSelectedItem()+"");
+                    int year_s= getYear(yearSpinner.getSelectedItem()+"");
+                    refreshData("ဝင္ေငြ",month_s,year_s);
+                    if(monthly){
+                        totalMonthly("ဝင္ေငြ",month_s,year_s);
+                    }else {
+                        totalYearly("ဝင္ေငြ",month_s,year_s);
+                    }
                 }
+
                 group.check(R.id.income);
                 profit.setVisibility(View.VISIBLE);
 
@@ -166,13 +241,14 @@ public class DashboardFragment extends Fragment {
         });
         return view;
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void spinner(boolean monthly){
         if(monthly){
-            monthAdapter=new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,months);
+            monthAdapter=new ArrayAdapter<>(requireContext(),android.R.layout.simple_spinner_dropdown_item,months);
         }else {
-            monthAdapter=new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,years);
+            monthAdapter=new ArrayAdapter<>(requireContext(),android.R.layout.simple_spinner_dropdown_item,years);
         }
-        yearAdapter=new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,years);
+        yearAdapter=new ArrayAdapter<>(requireContext(),android.R.layout.simple_spinner_dropdown_item,years);
         monthSpinner.setAdapter(monthAdapter);
         yearSpinner.setAdapter(yearAdapter);
     }
@@ -223,7 +299,7 @@ public class DashboardFragment extends Fragment {
             typeData.clear();
             DatabaseHelper helper = new DatabaseHelper(getContext());
             Cursor cursor = helper.getType();
-            if (cursor.getCount() > 0 && cursor != null) {
+            if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
                     if(cursor.getString(1).equals(data)){
                         typeData.add(new TypeData(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
@@ -235,8 +311,14 @@ public class DashboardFragment extends Fragment {
             e.printStackTrace();
         }
         ArrayList<String> profit_list=new ArrayList<>();
-        profit_list.add("ဝင္ေငြ");
-        profit_list.add("ထြက္ေငြ");
+        if(!isZawgyiFont()){
+            profit_list.add(Rabbit.zg2uni("ဝင္ေငြ"));
+            profit_list.add(Rabbit.zg2uni("ထြက္ေငြ"));
+        }else {
+            profit_list.add("ဝင္ေငြ");
+            profit_list.add("ထြက္ေငြ");
+        }
+
         if(monthly){
             reportAdapter=new ReportAdapter(getContext(),typeData,month,year,1);
             profitAdapter=new ProfitAdapter(getContext(),profit_list,month,year,1);
@@ -255,27 +337,49 @@ public class DashboardFragment extends Fragment {
         try {
             DatabaseHelper helper = new DatabaseHelper(getContext());
             Cursor cursor=helper.getSayan();
-            if(cursor.getCount()>0 && cursor!=null){
+            if(cursor.getCount() > 0){
                 while (cursor.moveToNext()){
                     String date = cursor.getString(5);
                     int ret_month = Integer.parseInt(date.split("/")[1]);
                     int ret_year = Integer.parseInt(date.split("/")[2]);
                     if(quest==1){
-                        if (month == ret_month && year == ret_year) {
-                            if(cursor.getString(1).equals("ဝင္ေငြ")){
-                                income_ks+=Integer.parseInt(cursor.getString(4));
-                            }else if(cursor.getString(1).equals("ထြက္ေငြ")){
-                                outcome_ks+=Integer.parseInt(cursor.getString(4));
+                        if(!isZawgyiFont()){
+                            if (month == ret_month && year == ret_year) {
+                                if(cursor.getString(1).equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                                    income_ks+=Integer.parseInt(cursor.getString(4));
+                                }else if(cursor.getString(1).equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                                    outcome_ks+=Integer.parseInt(cursor.getString(4));
+                                }
+                            }
+                        }else {
+                            if (month == ret_month && year == ret_year) {
+                                if(cursor.getString(1).equals("ဝင္ေငြ")){
+                                    income_ks+=Integer.parseInt(cursor.getString(4));
+                                }else if(cursor.getString(1).equals("ထြက္ေငြ")){
+                                    outcome_ks+=Integer.parseInt(cursor.getString(4));
+                                }
                             }
                         }
+
                     }else if(quest==0){
-                        if (year >= ret_year && month <= ret_month) {
-                            if(cursor.getString(1).equals("ဝင္ေငြ")){
-                                income_ks+=Integer.parseInt(cursor.getString(4));
-                            }else if(cursor.getString(1).equals("ထြက္ေငြ")){
-                                outcome_ks+=Integer.parseInt(cursor.getString(4));
+                        if(!isZawgyiFont()){
+                            if (year >= ret_year && month <= ret_month) {
+                                if(cursor.getString(1).equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                                    income_ks+=Integer.parseInt(cursor.getString(4));
+                                }else if(cursor.getString(1).equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                                    outcome_ks+=Integer.parseInt(cursor.getString(4));
+                                }
+                            }
+                        }else {
+                            if (year >= ret_year && month <= ret_month) {
+                                if(cursor.getString(1).equals("ဝင္ေငြ")){
+                                    income_ks+=Integer.parseInt(cursor.getString(4));
+                                }else if(cursor.getString(1).equals("ထြက္ေငြ")){
+                                    outcome_ks+=Integer.parseInt(cursor.getString(4));
+                                }
                             }
                         }
+
                     }
 
                 }
@@ -288,12 +392,14 @@ public class DashboardFragment extends Fragment {
             }else {
                 profit.setText("("+change(profit_ks+"")+"က်ပ္)");
             }
+            if(!isZawgyiFont()){
+                profit.setText(Rabbit.zg2uni(profit.getText().toString()));
+            }
             income_ks=0;outcome_ks=0;
         }catch (Exception e){
             Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
-
     public int getMonth(String data){
         int i=0;
         switch (data) {
@@ -392,10 +498,13 @@ public class DashboardFragment extends Fragment {
                             total_value+=value;
                         }
                     }
-
                 }
             }
-            total.setText("("+change(total_value+"")+"က်ပ္"+")");
+            if (!isZawgyiFont()){
+                total.setText("("+change(total_value+"")+Rabbit.zg2uni("က်ပ္")+")");
+            }else {
+                total.setText("("+change(total_value+"")+"က်ပ္"+")");
+            }
             total_value=0;
             helper.close();
         } catch (Exception e) {
@@ -420,7 +529,12 @@ public class DashboardFragment extends Fragment {
                     }
                 }
             }
-            total.setText("("+change(total_value+"")+"က်ပ္"+")");
+            if(!isZawgyiFont()){
+                total.setText("("+change(total_value+"")+Rabbit.zg2uni("က်ပ္")+")");
+            }else {
+                total.setText("("+change(total_value+"")+"က်ပ္"+")");
+            }
+
             total_value=0;
             helper.close();
         } catch (Exception e) {
@@ -455,5 +569,9 @@ public class DashboardFragment extends Fragment {
             }
         }
         return change_str.toString();
+    }
+    public boolean isZawgyiFont(){
+        SharedPreferences preferences= requireActivity().getSharedPreferences("Font", Context.MODE_PRIVATE);
+        return preferences.getBoolean("Font",true);
     }
 }

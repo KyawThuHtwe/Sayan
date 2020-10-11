@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +64,10 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
         builder.setView(view);
         final AlertDialog ad=builder.create();
         ad.show();
+        if(!isZawgyiFont()){
+            delete.setText(Rabbit.zg2uni(delete.getText().toString()));
+            update.setText(Rabbit.zg2uni(update.getText().toString()));
+        }
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +96,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
         });
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ResourceType"})
     private void updateCategory(View v, final String id, final String category, String type_t) {
         View view= LayoutInflater.from(v.getContext()).inflate(R.layout.addnew_type,null);
         final EditText type=view.findViewById(R.id.type);
@@ -100,6 +105,13 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
         TextView title=view.findViewById(R.id.title);
         RadioGroup group=view.findViewById(R.id.radioGroup);
         if(!isZawgyiFont()){
+            TextView t1=view.findViewById(R.id.t1);
+            RadioButton income=view.findViewById(R.id.income);
+            RadioButton outcome=view.findViewById(R.id.outcome);
+            t1.setText(Rabbit.zg2uni(t1.getText().toString()));
+            income.setText(Rabbit.zg2uni(income.getText().toString()));
+            outcome.setText(Rabbit.zg2uni(outcome.getText().toString()));
+            type.setHint(Rabbit.zg2uni(context.getResources().getString(R.string.type)));
             title.setText(Rabbit.zg2uni("ျပင္ဆင္မည္"));
             if(category.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
                 group.check(R.id.income);

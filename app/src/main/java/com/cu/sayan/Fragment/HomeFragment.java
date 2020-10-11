@@ -171,6 +171,14 @@ public class HomeFragment extends Fragment {
         TextView type_t=view.findViewById(R.id.type);
         type_t.setText(type);
         final TextView update=view.findViewById(R.id.update);
+        if(!isZawgyiFont()){
+            delete.setText(Rabbit.zg2uni(delete.getText().toString()));
+            update.setText(Rabbit.zg2uni(update.getText().toString()));
+        }else {
+            delete.setText(delete.getText().toString());
+            update.setText(update.getText().toString());
+        }
+
         AlertDialog.Builder builder=new AlertDialog.Builder(requireContext());
         builder.setView(view);
         final AlertDialog ad=builder.create();
@@ -257,20 +265,41 @@ public class HomeFragment extends Fragment {
                     int cur_year=calendar.get(Calendar.YEAR);
 
                     if (cur_month == month && cur_year == year) {
-                        if(cursor.getString(1).equals("ဝင္ေငြ")){
-                            income_ks+=Integer.parseInt(cursor.getString(4));
-                        }else if(cursor.getString(1).equals("ထြက္ေငြ")){
-                            outcome_ks+=Integer.parseInt(cursor.getString(4));
+                        if(!isZawgyiFont()){
+                            if(cursor.getString(1).equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                                income_ks+=Integer.parseInt(cursor.getString(4));
+                            }else if(cursor.getString(1).equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                                outcome_ks+=Integer.parseInt(cursor.getString(4));
+                            }
+                        }else {
+                            if(cursor.getString(1).equals("ဝင္ေငြ")){
+                                income_ks+=Integer.parseInt(cursor.getString(4));
+                            }else if(cursor.getString(1).equals("ထြက္ေငြ")){
+                                outcome_ks+=Integer.parseInt(cursor.getString(4));
+                            }
                         }
+
                     }
                     if (dayOfFinal==day && monthOfFinal== month && yearOfFinal == year) {
-                        if(str.equals("ဝင္ေငြ")){
-                            if(cursor.getString(1).equals("ဝင္ေငြ")){
-                                daily_income+=Integer.parseInt(cursor.getString(4));
+                        if(!isZawgyiFont()){
+                            if(str.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                                if(cursor.getString(1).equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                                    daily_income+=Integer.parseInt(cursor.getString(4));
+                                }
+                            }else if(str.equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                                if(cursor.getString(1).equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                                    daily_outcome+=Integer.parseInt(cursor.getString(4));
+                                }
                             }
-                        }else if(str.equals("ထြက္ေငြ")){
-                            if(cursor.getString(1).equals("ထြက္ေငြ")){
-                                daily_outcome+=Integer.parseInt(cursor.getString(4));
+                        }else {
+                            if(str.equals("ဝင္ေငြ")){
+                                if(cursor.getString(1).equals("ဝင္ေငြ")){
+                                    daily_income+=Integer.parseInt(cursor.getString(4));
+                                }
+                            }else if(str.equals("ထြက္ေငြ")){
+                                if(cursor.getString(1).equals("ထြက္ေငြ")){
+                                    daily_outcome+=Integer.parseInt(cursor.getString(4));
+                                }
                             }
                         }
                     }
@@ -283,26 +312,42 @@ public class HomeFragment extends Fragment {
             int cur_month=calendar.get(Calendar.MONTH)+1;
             int cur_year=calendar.get(Calendar.YEAR);
             if(dayOfFinal==cur_day && monthOfFinal==cur_month && yearOfFinal==cur_year){
-                if(str.equals("ဝင္ေငြ")){
-                    today_type.setText(requireContext().getResources().getString(R.string.today_income));
-                    today_in_out.setText(change(daily_income+""));
-                }else if(str.equals("ထြက္ေငြ")){
-                    today_type.setText(requireContext().getResources().getString(R.string.today_outcome));
-                    today_in_out.setText(change(daily_outcome+""));
+                if(!isZawgyiFont()){
+                    if(str.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                        today_type.setText(Rabbit.zg2uni(requireContext().getResources().getString(R.string.today_income)));
+                        today_in_out.setText(change(daily_income+""));
+                    }else if(str.equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                        today_type.setText(Rabbit.zg2uni(requireContext().getResources().getString(R.string.today_outcome)));
+                        today_in_out.setText(change(daily_outcome+""));
+                    }
+                }else {
+                    if(str.equals("ဝင္ေငြ")){
+                        today_type.setText(requireContext().getResources().getString(R.string.today_income));
+                        today_in_out.setText(change(daily_income+""));
+                    }else if(str.equals("ထြက္ေငြ")){
+                        today_type.setText(requireContext().getResources().getString(R.string.today_outcome));
+                        today_in_out.setText(change(daily_outcome+""));
+                    }
                 }
             }else {
-                if(str.equals("ဝင္ေငြ")){
-                    today_type.setText(today.getText()+" "+requireContext().getResources().getString(R.string.income));
-                    today_in_out.setText(change(daily_income+""));
-                }else if(str.equals("ထြက္ေငြ")){
-                    today_type.setText(today.getText()+" "+requireContext().getResources().getString(R.string.outcome));
-                    today_in_out.setText(change(daily_outcome+""));
+                if(!isZawgyiFont()){
+                    if(str.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                        today_type.setText(today.getText()+" "+Rabbit.zg2uni(requireContext().getResources().getString(R.string.income)));
+                        today_in_out.setText(change(daily_income+""));
+                    }else if(str.equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                        today_type.setText(today.getText()+" "+Rabbit.zg2uni(requireContext().getResources().getString(R.string.outcome)));
+                        today_in_out.setText(change(daily_outcome+""));
+                    }
+                }else {
+                    if(str.equals("ဝင္ေငြ")){
+                        today_type.setText(today.getText()+" "+requireContext().getResources().getString(R.string.income));
+                        today_in_out.setText(change(daily_income+""));
+                    }else if(str.equals("ထြက္ေငြ")){
+                        today_type.setText(today.getText()+" "+requireContext().getResources().getString(R.string.outcome));
+                        today_in_out.setText(change(daily_outcome+""));
+                    }
                 }
             }
-            if(!isZawgyiFont()){
-                today_type.setText(Rabbit.zg2uni(today_type.getText().toString()));
-            }
-
             daily_income=0;
             daily_outcome=0;
 
@@ -405,14 +450,25 @@ public class HomeFragment extends Fragment {
             outcome_change.setTextColor(R.color.colorWhite);
             outcome_change.setBackgroundResource(R.color.colorIncome);
             income_change.setBackgroundResource(R.color.colorTransparent);
-            refreshData("ထြက္ေငြ");
-            initialize("ထြက္ေငြ");
+            if(!isZawgyiFont()){
+                refreshData(Rabbit.zg2uni("ထြက္ေငြ"));
+                initialize(Rabbit.zg2uni("ထြက္ေငြ"));
+            }else {
+                refreshData("ထြက္ေငြ");
+                initialize("ထြက္ေငြ");
+            }
+
         }else {
             income_change.setTextColor(R.color.colorWhite);
             income_change.setBackgroundResource(R.color.colorIncome);
             outcome_change.setBackgroundResource(R.color.colorTransparent);
-            refreshData("ဝင္ေငြ");
-            initialize("ဝင္ေငြ");
+            if(!isZawgyiFont()){
+                refreshData(Rabbit.zg2uni("ဝင္ေငြ"));
+                initialize(Rabbit.zg2uni("ဝင္ေငြ"));
+            }else {
+                refreshData("ဝင္ေငြ");
+                initialize("ဝင္ေငြ");
+            }
         }
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

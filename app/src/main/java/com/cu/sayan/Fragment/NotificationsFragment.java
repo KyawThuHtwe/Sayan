@@ -17,14 +17,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cu.sayan.Activity.FontActivity;
 import com.cu.sayan.Activity.MainActivity;
 import com.cu.sayan.Activity.PasswordActivity;
 import com.cu.sayan.Activity.TypeActivity;
 import com.cu.sayan.Database.DatabaseHelper;
 import com.cu.sayan.Font.Rabbit;
 import com.cu.sayan.R;
-
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -36,7 +35,6 @@ public class NotificationsFragment extends Fragment {
     LinearLayout type,delete;
     CheckBox checkBox;
     TextView password,t1,t2;
-    RadioGroup font;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
@@ -62,58 +60,28 @@ public class NotificationsFragment extends Fragment {
         t1=view.findViewById(R.id.t1);
         t2=view.findViewById(R.id.t2);
         onOff(checkBox,1);
-        font=view.findViewById(R.id.font);
-        font.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId==R.id.zawgyi){
-                    zawgyiFont(true);
-                    password.setText(requireContext().getResources().getString(R.string.password_not));
-                    t1.setText(requireContext().getResources().getString(R.string.type));
-                    t2.setText(requireContext().getResources().getString(R.string.add_new));
-                    font.check(R.id.zawgyi);
-                    reLoading();
-                }else if(checkedId==R.id.unicode){
-                    zawgyiFont(false);
-                    password.setText(changeUnicode(requireContext().getResources().getString(R.string.password_not)));
-                    t1.setText(changeUnicode(requireContext().getResources().getString(R.string.type)));
-                    t2.setText(changeUnicode(requireContext().getResources().getString(R.string.add_new)));
-                    font.check(R.id.unicode);
-                    reLoading();
-                }
-            }
-        });
+
         if(isZawgyiFont()){
             password.setText(requireContext().getResources().getString(R.string.password_not));
             t1.setText(requireContext().getResources().getString(R.string.type));
             t2.setText(requireContext().getResources().getString(R.string.add_new));
-            font.check(R.id.zawgyi);
         }else {
             password.setText(changeUnicode(requireContext().getResources().getString(R.string.password_not)));
             t1.setText(changeUnicode(requireContext().getResources().getString(R.string.type)));
             t2.setText(changeUnicode(requireContext().getResources().getString(R.string.add_new)));
-            font.check(R.id.unicode);
         }
+        LinearLayout language=view.findViewById(R.id.language);
+        language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), FontActivity.class));
+            }
+        });
         return view;
-    }
-    public void reLoading(){
-        notOnce(true);
-        DatabaseHelper helper=new DatabaseHelper(getContext());
-        helper.deleteTypeTable();
-        requireActivity().finish();
-        startActivity(new Intent(getContext(), MainActivity.class));
     }
 
     public String changeUnicode(String string){
         return Rabbit.zg2uni(string);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void zawgyiFont(boolean res){
-        SharedPreferences preferences= requireActivity().getSharedPreferences("Font",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferences.edit();
-        editor.putBoolean("Font",res);
-        editor.apply();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -252,10 +220,5 @@ public class NotificationsFragment extends Fragment {
     public boolean isZawgyiFont(){
         SharedPreferences preferences= requireActivity().getSharedPreferences("Font",Context.MODE_PRIVATE);
         return preferences.getBoolean("Font",true);
-    }
-    public void notOnce(boolean res){
-        SharedPreferences preferences=requireActivity().getSharedPreferences("Exit", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=preferences.edit();
-        editor.putBoolean("exit",res).apply();
     }
 }

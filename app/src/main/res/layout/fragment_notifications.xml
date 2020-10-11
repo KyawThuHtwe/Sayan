@@ -89,6 +89,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/type"
+                        android:background="?selectableItemBackground"
                         android:padding="@dimen/_20sdp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -105,7 +106,7 @@
                             android:layout_height="@dimen/_10sdp"/>
                         <TextView
                             android:id="@+id/t1"
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/_12ssp"
                             android:textColor="@color/colorTextPrimary"
                             android:text="@string/type"
                             android:layout_width="wrap_content"
@@ -117,7 +118,7 @@
                         <TextView
                             android:id="@+id/t2"
                             android:layout_weight="1"
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/_12ssp"
                             android:textColor="@color/colorTextPrimary"
                             android:text="@string/add_new"
                             android:layout_width="0dp"
@@ -126,6 +127,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/database"
+                        android:background="?selectableItemBackground"
                         android:padding="@dimen/_20sdp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
@@ -150,66 +152,29 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:orientation="vertical"
+                        android:id="@+id/language"
+                        android:background="?selectableItemBackground"
+                        android:padding="@dimen/_20sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <LinearLayout
-                            android:paddingBottom="@dimen/_10sdp"
-                            android:paddingLeft="@dimen/_20sdp"
-                            android:paddingTop="@dimen/_20sdp"
-                            android:paddingRight="@dimen/_20sdp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <ImageView
-                                android:src="@drawable/language"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:tint="@color/colorTextPrimary"
-                                android:contentDescription="@string/app_name" />
-                            <View
-                                android:layout_width="@dimen/_10sdp"
-                                android:layout_height="@dimen/_10sdp"/>
-                            <TextView
-                                android:layout_weight="1"
-                                android:textSize="@dimen/_12ssp"
-                                android:textColor="@color/colorTextPrimary"
-                                android:text="@string/language"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_marginLeft="@dimen/_20sdp"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:padding="@dimen/_10sdp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
+                        <ImageView
+                            android:src="@drawable/language"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:ignore="RtlHardcoded">
-                            <RadioGroup
-                                android:id="@+id/font"
-                                android:orientation="horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                tools:ignore="UselessParent">
-                                <RadioButton
-                                    android:id="@+id/zawgyi"
-                                    android:checked="true"
-                                    android:text="@string/zawgyi"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
-                                <View
-                                    android:layout_width="@dimen/_10sdp"
-                                    android:layout_height="@dimen/_10sdp"/>
-                                <RadioButton
-                                    android:id="@+id/unicode"
-                                    android:text="@string/unicode"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
-                            </RadioGroup>
-                        </LinearLayout>
+                            app:tint="@color/colorTextPrimary"
+                            android:contentDescription="@string/app_name" />
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"/>
+                        <TextView
+                            android:layout_weight="1"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/colorTextPrimary"
+                            android:text="@string/language"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

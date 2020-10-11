@@ -7,12 +7,12 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:gravity="center_vertical"
-        android:layout_margin="@dimen/_15sdp"
+        android:layout_margin="@dimen/_14sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/title"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_15ssp"
             android:textColor="@color/colorTextPrimary"
             android:text="@string/add_new"
             android:layout_weight="1"
@@ -57,7 +57,7 @@
             android:inputType="text"
             android:layout_margin="@dimen/_15sdp"
             app:layout_constraintTop_toTopOf="parent"
-            android:textSize="@dimen/_13ssp"
+            android:textSize="@dimen/_14ssp"
             android:padding="@dimen/_10sdp"
             android:background="@drawable/corner_bound"
             android:textColorHint="@color/colorTextSecondary"
@@ -66,6 +66,7 @@
             android:layout_height="@dimen/_35sdp"
             tools:ignore="Autofill" />
         <TextView
+            android:id="@+id/t1"
             android:background="@color/colorWhite"
             android:layout_marginRight="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="parent"

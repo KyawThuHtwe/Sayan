@@ -10,7 +10,7 @@
     <string name="profit">လက္က်န္</string>
     <string name="insert">သိမ္းဆည္းမည္</string>
     <string name="update">ျပဳျပင္မည္</string>
-    <string name="delete">အၿပီးဖ်က္သိမ္းမည္</string>
+    <string name="delete">ဖ်က္သိမ္းမည္</string>
     <string name="sayan">စာရင္း</string>
     <string name="title">အေၾကာင္းအရာ</string>
     <string name="amount">ေငြပမာဏ</string>
@@ -62,4 +62,5 @@
     <string name="version_1_0_0">Version : 1.0.0</string>
     <string name="today_income">ယေန႔ ဝင္ေငြ</string>
     <string name="today_outcome">ယေန႔ ထြက္ေငြ</string>
+    <string name="choose_one">Choose</string>
 </resources>

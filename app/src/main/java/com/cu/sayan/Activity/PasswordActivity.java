@@ -67,6 +67,11 @@ public class PasswordActivity extends AppCompatActivity {
                 delete();
             }
         });
+        if(!isZawgyiFont()){
+            password.setText(Rabbit.zg2uni(getResources().getString(R.string.CurrentP)));
+        }else {
+            password.setText(getResources().getString(R.string.CurrentP));
+        }
 
     }
     public void keyPress(final TextView key){

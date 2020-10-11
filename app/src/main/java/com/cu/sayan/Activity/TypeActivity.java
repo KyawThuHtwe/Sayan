@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.cu.sayan.Adapter.TypeAdapter;
 import com.cu.sayan.Database.DatabaseHelper;
+import com.cu.sayan.Font.Rabbit;
 import com.cu.sayan.Model.TypeData;
 import com.cu.sayan.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,7 +45,12 @@ public class TypeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_type);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.type));
+        if(!isZawgyiFont()){
+            getSupportActionBar().setTitle(Rabbit.zg2uni(getResources().getString(R.string.type)));
+        }else {
+            getSupportActionBar().setTitle(getResources().getString(R.string.type));
+        }
+
         recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         reload();
@@ -114,6 +122,22 @@ public class TypeActivity extends AppCompatActivity {
         TextView ok=view.findViewById(R.id.ok);
         TextView cancel=view.findViewById(R.id.cancel);
         cancel.setVisibility(View.GONE);
+        if(!isZawgyiFont()){
+            TextView title=view.findViewById(R.id.title);
+            TextView t1=view.findViewById(R.id.t1);
+            RadioButton income=view.findViewById(R.id.income);
+            RadioButton outcome=view.findViewById(R.id.outcome);
+            income.setText(Rabbit.zg2uni(income.getText().toString()));
+            outcome.setText(Rabbit.zg2uni(outcome.getText().toString()));
+            ok.setText(Rabbit.zg2uni(ok.getText().toString()));
+            cancel.setText(Rabbit.zg2uni(cancel.getText().toString()));
+            title.setText(Rabbit.zg2uni(title.getText().toString()));
+            t1.setText(Rabbit.zg2uni(t1.getText().toString()));
+            type.setHint(Rabbit.zg2uni(type.getHint().toString()));
+        }else {
+            ok.setText(ok.getText().toString());
+            cancel.setText(cancel.getText().toString());
+        }
         AlertDialog.Builder builder=new AlertDialog.Builder(v.getContext());
         builder.setView(view);
         final AlertDialog ad=builder.create();
@@ -128,10 +152,18 @@ public class TypeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ad.dismiss();
-                if(result){
-                    insert("ဝင္ေငြ",type.getText().toString());
+                if(!isZawgyiFont()){
+                    if(result){
+                        insert(Rabbit.zg2uni("ဝင္ေငြ"),type.getText().toString());
+                    }else {
+                        insert(Rabbit.zg2uni("ထြက္ေငြ"),type.getText().toString());
+                    }
                 }else {
-                    insert("ထြက္ေငြ",type.getText().toString());
+                    if(result){
+                        insert("ဝင္ေငြ",type.getText().toString());
+                    }else {
+                        insert("ထြက္ေငြ",type.getText().toString());
+                    }
                 }
 
             }
@@ -146,5 +178,9 @@ public class TypeActivity extends AppCompatActivity {
         }else {
             Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();
         }
+    }
+    public boolean isZawgyiFont(){
+        SharedPreferences preferences= getSharedPreferences("Font", Context.MODE_PRIVATE);
+        return preferences.getBoolean("Font",true);
     }
 }

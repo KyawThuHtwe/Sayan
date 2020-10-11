@@ -88,12 +88,14 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         final BottomSheetDialog dialog = new BottomSheetDialog(v.getContext());
         dialog.setContentView(view);
         dialog.show();
-        TextView type_t,list_t,amount;
+        TextView type_t,list_t,amount,t1;
         type_t=view.findViewById(R.id.type);
         amount=view.findViewById(R.id.amount);
         list_t=view.findViewById(R.id.list);
+        t1=view.findViewById(R.id.t1);
         type_t.setText(type);
         if(!isZawgyiFont()){
+            t1.setText(Rabbit.zg2uni(t1.getText().toString()));
             list_t.setText(Rabbit.zg2uni(list_t.getText().toString()));
             amount.setText("("+change(value)+Rabbit.zg2uni("က်ပ္")+")");
         }else {

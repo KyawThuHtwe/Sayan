@@ -54,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/t1"
             android:textSize="@dimen/_14ssp"
             android:textColor="@color/colorTextPrimary"
             android:paddingLeft="@dimen/_10sdp"

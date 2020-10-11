@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,12 +18,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cu.sayan.Database.DatabaseHelper;
+import com.cu.sayan.Font.Rabbit;
 import com.cu.sayan.Model.TypeData;
 import com.cu.sayan.R;
 
@@ -57,17 +60,29 @@ public class SayanActivity extends AppCompatActivity {
         });
         type=findViewById(R.id.type);
         RadioGroup radioGroup=findViewById(R.id.radio);
-        category="ထြက္ေငြ";
+        if(!isZawgyiFont()){
+            category= Rabbit.zg2uni( "ထြက္ေငြ");
+        }else {
+            category="ထြက္ေငြ";
+        }
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.outcome:
-                        category="ထြက္ေငြ";
+                        if(!isZawgyiFont()){
+                            category= Rabbit.zg2uni( "ထြက္ေငြ");
+                        }else {
+                            category="ထြက္ေငြ";
+                        }
                         reload();
                         break;
                     case R.id.income:
-                        category="ဝင္ေငြ";
+                        if(!isZawgyiFont()){
+                            category= Rabbit.zg2uni( "ဝင္ေငြ");
+                        }else {
+                            category="ဝင္ေငြ";
+                        }
                         reload();
                         break;
                 }
@@ -92,6 +107,29 @@ public class SayanActivity extends AppCompatActivity {
                 insert(category+"",type.getSelectedItem()+"",title.getText()+"",amount.getText()+"",InsertDate);
             }
         });
+        if(!isZawgyiFont()){
+            TextView t1=findViewById(R.id.t1);
+            TextView t2=findViewById(R.id.t2);
+            TextView t3=findViewById(R.id.t3);
+            TextView t4=findViewById(R.id.t4);
+            TextView t5=findViewById(R.id.t5);
+            TextView t6=findViewById(R.id.t6);
+            TextView insert=findViewById(R.id.insert);
+            RadioButton income=findViewById(R.id.income);
+            RadioButton outcome=findViewById(R.id.outcome);
+            t1.setText(Rabbit.zg2uni(t1.getText().toString()));
+            t2.setText(Rabbit.zg2uni(t2.getText().toString()));
+            t3.setText(Rabbit.zg2uni(t3.getText().toString()));
+            t4.setText(Rabbit.zg2uni(t4.getText().toString()));
+            t5.setText(Rabbit.zg2uni(t5.getText().toString()));
+            t6.setText(Rabbit.zg2uni(t6.getText().toString()));
+            insert.setText(Rabbit.zg2uni(insert.getText().toString()));
+            income.setText(Rabbit.zg2uni(income.getText().toString()));
+            outcome.setText(Rabbit.zg2uni(outcome.getText().toString()));
+            title.setHint(Rabbit.zg2uni(getResources().getString(R.string.title)));
+            amount.setHint(Rabbit.zg2uni(getResources().getString(R.string.amount)));
+        }
+
     }
     public void reload(){
         try {
@@ -101,14 +139,27 @@ public class SayanActivity extends AppCompatActivity {
             Cursor cursor=helper.getType();
             if(cursor.getCount()>0 && cursor!=null){
                 while (cursor.moveToNext()){
-                    if(category.equals("ထြက္ေငြ")){
-                        if(cursor.getString(1).equals("ထြက္ေငြ"))
-                            typeData.add(cursor.getString(2));
-                    }else if(category.equals("ဝင္ေငြ")){
-                        if(cursor.getString(1).equals("ဝင္ေငြ"))
-                            typeData.add(cursor.getString(2));
+                    if(!isZawgyiFont()){
+                        if(category.equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                            if(cursor.getString(1).equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                                typeData.add(cursor.getString(2));
+                            }
+                        }else if(category.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                            if(cursor.getString(1).equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                                typeData.add(cursor.getString(2));
+                            }
+                        }
+                    }else {
+                        if(category.equals("ထြက္ေငြ")){
+                            if(cursor.getString(1).equals("ထြက္ေငြ")){
+                                typeData.add(cursor.getString(2));
+                            }
+                        }else if(category.equals("ဝင္ေငြ")){
+                            if(cursor.getString(1).equals("ဝင္ေငြ")){
+                                typeData.add(cursor.getString(2));
+                            }
+                        }
                     }
-
                 }
             }
             ArrayAdapter arrayAdapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,typeData);
@@ -136,9 +187,12 @@ public class SayanActivity extends AppCompatActivity {
                 int month=(monthOfYear + 1);
                 int year=yearOfYear;
                 InsertDate=day+"/"+month+"/"+year;
-                textView.setText(monthChange(month)+" ၊ "+DYChange(day+"")+"ရက္"+" ၊ "+DYChange(year+"")+"ႏွစ္");
+                if(!isZawgyiFont()){
+                    textView.setText(Rabbit.zg2uni(monthChange(month)+" ၊ "+DYChange(day+"")+"ရက္"+" ၊ "+DYChange(year+"")+"ႏွစ္"));
+                }else {
+                    textView.setText(monthChange(month)+" ၊ "+DYChange(day+"")+"ရက္"+" ၊ "+DYChange(year+"")+"ႏွစ္");
+                }
             }
-
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
         datePickerDialog.show();
@@ -150,7 +204,11 @@ public class SayanActivity extends AppCompatActivity {
         int month=calendar.get(Calendar.MONTH)+1;
         int year=calendar.get(Calendar.YEAR);
         InsertDate=day+"/"+month+"/"+year;
-        textView.setText(monthChange(month)+" ၊ "+DYChange(day+"")+"ရက္"+" ၊ "+DYChange(year+"")+"ႏွစ္");
+        if(!isZawgyiFont()){
+            textView.setText(Rabbit.zg2uni(monthChange(month)+" ၊ "+DYChange(day+"")+"ရက္"+" ၊ "+DYChange(year+"")+"ႏွစ္"));
+        }else {
+            textView.setText(monthChange(month)+" ၊ "+DYChange(day+"")+"ရက္"+" ၊ "+DYChange(year+"")+"ႏွစ္");
+        }
     }
     public String monthChange(int ch){
         String change=null;
@@ -208,5 +266,9 @@ public class SayanActivity extends AppCompatActivity {
             }
         }
         return change_str.toString();
+    }
+    public boolean isZawgyiFont(){
+        SharedPreferences preferences= getSharedPreferences("Font",Context.MODE_PRIVATE);
+        return preferences.getBoolean("Font",true);
     }
 }

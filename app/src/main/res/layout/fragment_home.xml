@@ -169,7 +169,8 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/today"
-                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:background="@drawable/corner_radius_bound"
                 android:padding="@dimen/_10sdp"
                 android:textColor="@color/colorTextPrimary"

@@ -13,7 +13,7 @@
         <TextView
             android:id="@+id/type"
             android:padding="@dimen/_10sdp"
-            android:textSize="@dimen/_16ssp"
+            android:textSize="@dimen/_15ssp"
             android:textColor="@color/colorTextPrimary"
             android:text="@string/type"
             android:layout_weight="1"
