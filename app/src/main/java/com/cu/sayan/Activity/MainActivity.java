@@ -3,6 +3,8 @@ package com.cu.sayan.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.cu.sayan.Database.DatabaseHelper;
@@ -36,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        Menu menu=navView.getMenu();
+        MenuItem home = menu.findItem(R.id.navigation_home);
+        MenuItem daily = menu.findItem(R.id.navigation_daily);
+        MenuItem report = menu.findItem(R.id.navigation_dashboard);
+        MenuItem setting = menu.findItem(R.id.navigation_notifications);
+        if(!isZawgyiFont()){
+            home.setTitle(Rabbit.zg2uni(home.getTitle().toString()));
+            daily.setTitle(Rabbit.zg2uni(daily.getTitle().toString()));
+            report.setTitle(Rabbit.zg2uni(report.getTitle().toString()));
+            setting.setTitle(Rabbit.zg2uni(setting.getTitle().toString()));
+        }
 
         try {
             if(isOnce()) {

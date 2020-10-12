@@ -13,36 +13,38 @@
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_250sdp"
         tools:ignore="UselessParent">
-        <androidx.cardview.widget.CardView
-            app:cardCornerRadius="0dp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ProgressBar
-                    android:id="@+id/progress"
-                    android:max="1000"
-                    android:progress="100"
-                    android:scaleY="50"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-                <TextView
-                    android:id="@+id/type"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:textSize="@dimen/_14ssp"
-                    android:textColor="@color/colorTextPrimary"
-                    android:text="@string/type"
-                    android:gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:ignore="RtlHardcoded,RtlSymmetry" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:id="@+id/progress"
+                android:max="1000"
+                android:progress="100"
+                android:scaleY="50"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/type"
+                android:paddingLeft="@dimen/_10sdp"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/colorTextPrimary"
+                android:text="@string/type"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+        </RelativeLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/extra"
+        android:visibility="gone"
+        android:paddingLeft="@dimen/_10sdp"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/colorTextPrimary"
+        android:text="@string/_0000"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
 </LinearLayout>

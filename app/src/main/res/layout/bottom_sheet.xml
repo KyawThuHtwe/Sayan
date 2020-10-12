@@ -16,7 +16,7 @@
             android:padding="@dimen/_5sdp"
             android:background="@color/colorTextPrimary"
             android:id="@+id/type"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
             android:textColor="@color/colorWhite"
             android:text="@string/type"
             android:layout_width="wrap_content"
@@ -39,7 +39,7 @@
                 app:tint="@color/colorTextPrimary" />
 
             <TextView
-                android:textSize="@dimen/_14ssp"
+                android:textSize="@dimen/_12ssp"
                 android:textColor="@color/colorWhite"
                 android:padding="@dimen/_5sdp"
                 android:id="@+id/list"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/t1"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
             android:textColor="@color/colorTextPrimary"
             android:paddingLeft="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp"
@@ -65,7 +65,7 @@
 
         <TextView
             android:id="@+id/amount"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_12ssp"
             android:textColor="@color/colorTextPrimary"
             android:paddingBottom="@dimen/_10sdp"
             android:text="@string/amount"

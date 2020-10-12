@@ -142,7 +142,7 @@ public class ProfitAdapter extends RecyclerView.Adapter<ProfitAdapter.ViewHolder
             }
             if (setProgress_value > 0){
                 ObjectAnimator.ofInt(progressBar, "progress", (int) setProgress_value)
-                        .setDuration(1000)
+                        .setDuration(2000)
                         .start();
             }else {
                 progressBar.setProgress((int) setProgress_value);

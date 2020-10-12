@@ -6,16 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
+        android:padding="@dimen/_15sdp"
         android:gravity="center_vertical"
-        android:layout_margin="@dimen/_14sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/title"
+            android:layout_weight="1"
             android:textSize="@dimen/_14ssp"
             android:textColor="@color/colorTextPrimary"
-            android:text="@string/add_new"
-            android:layout_weight="1"
+            android:text="@string/daily_average"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <ImageView
@@ -26,94 +25,76 @@
             app:tint="@color/colorTextPrimary" />
 
     </LinearLayout>
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:id="@+id/income"
-            android:checked="true"
-            android:textSize="@dimen/_12ssp"
-            android:layout_margin="@dimen/_10sdp"
-            android:text="@string/income"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <RadioButton
-            android:id="@+id/outcome"
-            android:textSize="@dimen/_12ssp"
-            android:layout_margin="@dimen/_10sdp"
-            android:text="@string/outcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RadioGroup>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/type"
-            android:inputType="text"
+            android:id="@+id/amount"
+            android:inputType="number"
             android:layout_margin="@dimen/_15sdp"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="@dimen/_12ssp"
             android:padding="@dimen/_10sdp"
             android:background="@drawable/corner_bound"
             android:textColorHint="@color/colorTextSecondary"
-            android:hint="@string/type"
+            android:hint="@string/amount"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
-            tools:ignore="Autofill" />
+            android:layout_height="@dimen/_35sdp" />
         <TextView
             android:id="@+id/t1"
             android:background="@color/colorWhite"
             android:layout_marginRight="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="parent"
             android:textSize="@dimen/_12ssp"
-            app:layout_constraintTop_toTopOf="@id/type"
-            app:layout_constraintBottom_toTopOf="@id/type"
+            app:layout_constraintTop_toTopOf="@id/amount"
+            app:layout_constraintBottom_toTopOf="@id/amount"
             android:textColor="@color/colorTextPrimary"
-            android:text="@string/type"
+            android:text="@string/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:ignore="RtlHardcoded" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_5sdp"/>
+        android:layout_height="@dimen/_20sdp"/>
     <LinearLayout
-        android:layout_margin="@dimen/_15sdp"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <View
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"/>
         <TextView
-            android:id="@+id/cancel"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:background="@color/colorTextSecondary"
+            android:id="@+id/delete"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
+            android:layout_weight="1"
+            android:background="@color/colorOutcome"
             android:textSize="@dimen/_12ssp"
             android:textColor="@color/colorWhite"
             android:text="@string/delete"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
-
+        <View
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"/>
         <TextView
-            android:id="@+id/ok"
-            android:background="@color/colorPrimary"
+            android:id="@+id/update"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
             android:textSize="@dimen/_12ssp"
             android:textColor="@color/colorWhite"
-            android:text="@string/insert"
-            android:layout_weight="1"
+            android:text="@string/update"
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
-
+        <View
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"/>
     </LinearLayout>
-
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_15sdp"/>
 </LinearLayout>

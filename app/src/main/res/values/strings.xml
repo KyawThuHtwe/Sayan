@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Sayan</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Report</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">မူလေနရာ</string>
+    <string name="daily">ေန႔စဥ္</string>
+    <string name="title_dashboard">မွတ္တမ္းမ်ား</string>
+    <string name="setting">အျပင္အဆင္</string>
     <string name="income">ဝင္ေငြ</string>
     <string name="_0000">၀၀၀၀</string>
     <string name="ks">က်ပ္</string>
@@ -33,7 +34,6 @@
     <string name="language">Language</string>
     <string name="unicode">Unicode</string>
     <string name="zawgyi">Zawgyi</string>
-    <string name="setting">Setting</string>
     <string name="total">စုစုေပါင္း</string>
     <string name="cancel">မလုပ္ေတာ့ပါ</string>
     <string name="ok">လုပ္မည္</string>
@@ -63,4 +63,12 @@
     <string name="today_income">ယေန႔ ဝင္ေငြ</string>
     <string name="today_outcome">ယေန႔ ထြက္ေငြ</string>
     <string name="choose_one">Choose</string>
+    <string name="percent">%</string>
+    <string name="average">Average</string>
+    <string name="spend">ယေန႔ အသံုးျပဳေငြ စုစုေပါင္း</string>
+    <string name="left">ပ်မ္းမ်ွအသံုးစာရိတ္ က်န္ေငြ</string>
+    <string name="daily_average">တေန႔တာ ပ်မ္းမ်ွအသံုးစာရိတ္</string>
+    <string name="over_daily_average_rate_ks">တေန႔တာ ပ်မ္းမ်ွအသံုးစာရိတ္ ထက္ေက်ာ္လြန္ေသာ ေငြပမာဏ</string>
+    <string name="g">G</string>
+    <string name="account">Account</string>
 </resources>

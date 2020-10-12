@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -47,9 +45,7 @@ public class DashboardFragment extends Fragment {
     String[] months = {"ဇန္နဝါရီလ", "ေဖေဖာ္ဝါရီလ", "မတ္လ", "ဧပရယ္လ", "ေမလ", "ဇြန္လ", "ဇူလိုင္လ", "ျသဂုတ္လ", "စက္တင္ဘာလ", "ေအာက္တိုဘာလ", "ႏိုဝင္ဘာလ", "ဒီဇင္ဘာလ"};
     String[] years = {"၂၀၂၀ ခုႏွစ္", "၂၀၂၁ ခုႏွစ္", "၂၀၂၂ ခုႏွစ္", "၂၀၂၂ ခုႏွစ္", "၂၀၂၃ ခုႏွစ္", "၂၀၂၄ ခုႏွစ္", "၂၀၂၅ ခုႏွစ္", "၂၀၂၆ ခုႏွစ္", "၂၀၂၇ ခုႏွစ္", "၂၀၂၈ ခုႏွစ္", "၂၀၂၉ ခုႏွစ္", "၂၀၃၀ ခုႏွစ္"};
 
-    ImageView hide;
     TextView submit,to;
-    LinearLayout showHide,layout;
     RadioGroup radioGroup;
     TextView total,profit;
     boolean monthly=true;
@@ -60,11 +56,8 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         profit=view.findViewById(R.id.profit);
-        hide=view.findViewById(R.id.hide);
         submit=view.findViewById(R.id.submit);
         to=view.findViewById(R.id.to);
-        showHide=view.findViewById(R.id.showHide);
-        layout=view.findViewById(R.id.layout);
         if(!isZawgyiFont()){
             for(int i=0;i<months.length;i++){
                 months[i]=Rabbit.zg2uni(months[i]);
@@ -89,19 +82,6 @@ public class DashboardFragment extends Fragment {
             t2.setText(Rabbit.zg2uni(t2.getText().toString()));
             to.setText(Rabbit.zg2uni(to.getText().toString()));
         }
-
-        hide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showHide.setVisibility(View.VISIBLE);
-            }
-        });
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showHide.setVisibility(View.VISIBLE);
-            }
-        });
         monthSpinner=view.findViewById(R.id.monthSpinner);
         yearSpinner=view.findViewById(R.id.yearSpinner);
         total=view.findViewById(R.id.total);
@@ -109,7 +89,7 @@ public class DashboardFragment extends Fragment {
         Calendar calendar=Calendar.getInstance();
         final int month=calendar.get(Calendar.MONTH)+1;
         final int year=calendar.get(Calendar.YEAR);
-        selectSpinner(month,year);
+        selectSpinner(month);
         to.setVisibility(View.GONE);
         radioGroup=view.findViewById(R.id.radio);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -119,7 +99,7 @@ public class DashboardFragment extends Fragment {
                     case R.id.monthly:
                         monthly=true;
                         spinner(true);
-                        selectSpinner(month,year);
+                        selectSpinner(month);
                         recyclerView.setAdapter(null);
                         if(!isZawgyiFont()){
                             total.setText("၀"+Rabbit.zg2uni("က်ပ္"));
@@ -252,7 +232,7 @@ public class DashboardFragment extends Fragment {
         monthSpinner.setAdapter(monthAdapter);
         yearSpinner.setAdapter(yearAdapter);
     }
-    public void selectSpinner(int month,int year){
+    public void selectSpinner(int month){
         switch (month) {
             case 1:
                 monthSpinner.setSelection(0);

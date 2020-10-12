@@ -3,6 +3,7 @@ package com.cu.sayan.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.cu.sayan.Database.DatabaseHelper;
+import com.cu.sayan.Font.Rabbit;
 import com.cu.sayan.R;
 
 import java.util.Objects;
@@ -47,8 +49,15 @@ public class FontActivity extends AppCompatActivity {
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(!res){
+                        setCount("unicode");
+                    }
                     zawgyiFont(res);
-                    reLoading();
+                    if(getCount().equals("unicode")){
+                        reLoading();
+                    }
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
             });
             if (isZawgyiFont()) {
@@ -59,19 +68,38 @@ public class FontActivity extends AppCompatActivity {
         }catch (Exception e){
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
-
     }
     public void reLoading(){
-        notOnce(true);
         DatabaseHelper helper=new DatabaseHelper(getApplicationContext());
-        helper.deleteTypeTable();
-        finish();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        Cursor cursor1=helper.getType();
+        if(cursor1.getCount()>0){
+            while (cursor1.moveToNext()){
+                if(!isZawgyiFont()){
+                    helper.updateType(cursor1.getString(0)+"", Rabbit.zg2uni(cursor1.getString(1))+"",Rabbit.zg2uni(cursor1.getString(2)+""));
+                }else {
+                    helper.updateType(cursor1.getString(0)+"", Rabbit.uni2zg(cursor1.getString(1))+"",Rabbit.uni2zg(cursor1.getString(2)+""));
+                }
+            }
+        }
+        Cursor cursor2=helper.getSayan();
+        if(cursor2.getCount()>0){
+            while (cursor2.moveToNext()){
+                if(!isZawgyiFont()){
+                    helper.updateSayan(cursor2.getString(0)+"", Rabbit.zg2uni(cursor2.getString(1))+"",Rabbit.zg2uni(cursor2.getString(2)+""),Rabbit.zg2uni(cursor2.getString(3)+""),Rabbit.zg2uni(cursor2.getString(4)+""),cursor2.getString(5)+"");
+                }else {
+                    helper.updateSayan(cursor2.getString(0)+"", Rabbit.uni2zg(cursor2.getString(1))+"",Rabbit.uni2zg(cursor2.getString(2)+""),Rabbit.uni2zg(cursor2.getString(3)+""),Rabbit.uni2zg(cursor2.getString(4)+""),cursor2.getString(5)+"");
+                }
+            }
+        }
     }
-    public void notOnce(boolean res){
-        SharedPreferences preferences=getSharedPreferences("Exit", Context.MODE_PRIVATE);
+    public String getCount(){
+        SharedPreferences preferences=getSharedPreferences("Font", Context.MODE_PRIVATE);
+        return preferences.getString("Choose","zawgyi");
+    }
+    public void setCount(String font){
+        SharedPreferences preferences=getSharedPreferences("Font", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferences.edit();
-        editor.putBoolean("exit",res).apply();
+        editor.putString("Choose",font).apply();
     }
     public boolean isZawgyiFont(){
         SharedPreferences preferences= getSharedPreferences("Font",Context.MODE_PRIVATE);

@@ -173,6 +173,7 @@ public class SayanActivity extends AppCompatActivity {
         DatabaseHelper helper=new DatabaseHelper(getApplicationContext());
         boolean res=helper.insertSayan(category,type,title,amount,date);
         if(res){
+            finish();
             Toast.makeText(getApplicationContext(),"Successful",Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();

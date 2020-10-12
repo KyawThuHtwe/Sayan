@@ -1,11 +1,10 @@
 package com.cu.sayan.Fragment;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
@@ -13,46 +12,48 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cu.sayan.Activity.SayanActivity;
-import com.cu.sayan.Activity.UpdateActivity;
 import com.cu.sayan.Adapter.SayanAdapter;
 import com.cu.sayan.Database.DatabaseHelper;
 import com.cu.sayan.Font.Rabbit;
 import com.cu.sayan.Model.SayanData;
 import com.cu.sayan.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeFragment extends Fragment {
 
-    RecyclerView recyclerView;
-    SayanAdapter sayanAdapter;
-    ArrayList<SayanData> sayanData;
-    TextView income,outcome,profit,month,today,income_change,outcome_change;
-    LinearLayout notice_board;
-    ImageView up;
-    TextView today_type,today_in_out;
-    boolean change=false;
+    TextView income,outcome,profit,month,today,t2;
     int dayOfFinal,monthOfFinal,yearOfFinal;
-    boolean exchange=false;
+    TextView average,daily_spend_ks,daily_left_ks,daily_spend,daily_left,percent_text,over_ks;
+    ProgressBar progressBar;
+    LinearLayout over_layout,daily_outcome_detail;
+    ArrayList<SayanData> sayanData;
+    SayanAdapter sayanAdapter;
+    String[] months = {"ယခုလ", "ယခင္လ"};
+    AppCompatSpinner spinner;
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,120 +66,110 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getContext(), SayanActivity.class));
             }
         });
-        today_type=view.findViewById(R.id.today_type);
-        today_in_out=view.findViewById(R.id.today_in_out);
-        up=view.findViewById(R.id.up);
+        if(!isZawgyiFont()){
+            for(int i=0;i<months.length;i++){
+                months[i]=Rabbit.zg2uni(months[i]);
+            }
+        }
+        spinner=view.findViewById(R.id.spinner);
+        ArrayAdapter arrayAdapter=new ArrayAdapter<>(requireContext(),R.layout.spinner_item,months);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectSpinner();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        progressBar=view.findViewById(R.id.daily_progress);
+        percent_text=view.findViewById(R.id.percent_text);
         income=view.findViewById(R.id.income);
         outcome=view.findViewById(R.id.outcome);
         profit=view.findViewById(R.id.profit);
         month=view.findViewById(R.id.month);
-        today=view.findViewById(R.id.today);
-        income_change=view.findViewById(R.id.income_change);
-        outcome_change=view.findViewById(R.id.outcome_change);
+        over_layout=view.findViewById(R.id.over_layout);
+        over_ks=view.findViewById(R.id.over_ks);
+        daily_outcome_detail=view.findViewById(R.id.daily_outcome_detail);
+        t2=view.findViewById(R.id.t2);
         initialMonthDate(month,today);
-        recyclerView=view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        refresh(false);
-        income_change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refresh(false);
-                exchange=false;
-            }
-        });
-        outcome_change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refresh(true);
-                exchange=true;
-            }
-        });
-        today.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Date(today,v);
-            }
-        });
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return true;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder holder, int direction) {
-
-                int position=holder.getAdapterPosition();
-                String id=sayanData.get(position).getId();
-                String category=sayanData.get(position).getCategory();
-                String type=sayanData.get(position).getType();
-                String title=sayanData.get(position).getTitle();
-                String amount=sayanData.get(position).getAmount();
-                String date=sayanData.get(position).getDate();
-                action(id,category,type,title,amount,date);
-                if(exchange){
-                    refresh(true);
-                }else {
-                    refresh(false);
-                }
-            }
-        }).attachToRecyclerView(recyclerView);
-        notice_board=view.findViewById(R.id.notice_board);
-        up.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View v) {
-                if(notice_board.getVisibility()==View.VISIBLE){
-                    notice_board.setVisibility(View.GONE);
-                    up.setImageResource(R.drawable.downward);
-                }else if(notice_board.getVisibility()==View.GONE){
-                    notice_board.setVisibility(View.VISIBLE);
-                    up.setImageResource(R.drawable.upward);
-                }
-                up.setImageTintList(ColorStateList.valueOf(Color.BLACK));
-            }
-        });
-
         if(!isZawgyiFont()){
             TextView t1=view.findViewById(R.id.t1);
-            TextView t2=view.findViewById(R.id.t2);
             TextView t3=view.findViewById(R.id.t3);
-            TextView t4=view.findViewById(R.id.t4);
             TextView ks1=view.findViewById(R.id.ks1);
             TextView ks2=view.findViewById(R.id.ks2);
             TextView ks3=view.findViewById(R.id.ks3);
-            TextView ks4=view.findViewById(R.id.ks4);
             TextView sayan=view.findViewById(R.id.sayan);
+            TextView daily_over=view.findViewById(R.id.daily_over);
+            TextView daily_average=view.findViewById(R.id.daily_average);
             t1.setText(Rabbit.zg2uni(t1.getText().toString()));
             t2.setText(Rabbit.zg2uni(t2.getText().toString()));
             t3.setText(Rabbit.zg2uni(t3.getText().toString()));
-            t4.setText(Rabbit.zg2uni(t4.getText().toString()));
             ks1.setText(Rabbit.zg2uni(ks1.getText().toString()));
             ks2.setText(Rabbit.zg2uni(ks2.getText().toString()));
             ks3.setText(Rabbit.zg2uni(ks3.getText().toString()));
-            ks4.setText(Rabbit.zg2uni(ks4.getText().toString()));
             sayan.setText(Rabbit.zg2uni(sayan.getText().toString()));
-            income_change.setText(Rabbit.zg2uni(income_change.getText().toString()));
-            outcome_change.setText(Rabbit.zg2uni(outcome_change.getText().toString()));
+            daily_average.setText(Rabbit.zg2uni(daily_average.getText().toString()));
+            daily_over.setText(Rabbit.zg2uni(daily_over.getText().toString()));
         }
+        final ImageView addDaily=view.findViewById(R.id.addDaily);
+        average=view.findViewById(R.id.average);
+        daily_left=view.findViewById(R.id.daily_left);
+        daily_left_ks=view.findViewById(R.id.daily_left_ks);
+        daily_spend=view.findViewById(R.id.daily_spend);
+        daily_spend_ks=view.findViewById(R.id.daily_spend_ks);
+        addDaily.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewDaily();
+            }
+        });
+        dailyRefresh();
+        selectSpinner();
         return view;
     }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void action(final String id, final String category, final String type, final String title, final String amount, final String date) {
-        View view= LayoutInflater.from(getContext()).inflate(R.layout.action_category,null);
+
+    private void selectSpinner() {
+
+        if(spinner.getSelectedItemPosition()==0){
+            Calendar calendar=Calendar.getInstance();
+            int cur_day=calendar.get(Calendar.DAY_OF_MONTH);
+            int cur_month=calendar.get(Calendar.MONTH)+1;
+            int cur_year=calendar.get(Calendar.YEAR);
+            initialize(cur_day,cur_month,cur_year);
+        }else if(spinner.getSelectedItemPosition()==1){
+            Calendar calendar=Calendar.getInstance();
+            int pre_day=calendar.get(Calendar.DAY_OF_MONTH);
+            int pre_month=calendar.get(Calendar.MONTH);
+            int pre_year=calendar.get(Calendar.YEAR);
+            initialize(pre_day,pre_month,pre_year);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void dailyRefresh(){
+        if(!isZawgyiFont()){
+            average.setText(change(getDailyAverage())+Rabbit.zg2uni("က်ပ္"));
+        }else {
+            average.setText(change(getDailyAverage())+"က်ပ္");
+        }
+    }
+    public void addNewDaily(){
+        View view= LayoutInflater.from(getContext()).inflate(R.layout.add_daily_average,null);
         ImageView close=view.findViewById(R.id.close);
         TextView delete=view.findViewById(R.id.delete);
-        TextView type_t=view.findViewById(R.id.type);
-        type_t.setText(type);
-        final TextView update=view.findViewById(R.id.update);
+        TextView update=view.findViewById(R.id.update);
+        final EditText amount=view.findViewById(R.id.amount);
+        amount.setText(getDailyAverage());
         if(!isZawgyiFont()){
+            TextView t1=view.findViewById(R.id.t1);
             delete.setText(Rabbit.zg2uni(delete.getText().toString()));
             update.setText(Rabbit.zg2uni(update.getText().toString()));
-        }else {
-            delete.setText(delete.getText().toString());
-            update.setText(update.getText().toString());
+            t1.setText(Rabbit.zg2uni(t1.getText().toString()));
         }
-
         AlertDialog.Builder builder=new AlertDialog.Builder(requireContext());
         builder.setView(view);
         final AlertDialog ad=builder.create();
@@ -189,67 +180,38 @@ public class HomeFragment extends Fragment {
                 ad.dismiss();
             }
         });
-        delete.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onClick(View v) {
-                ad.dismiss();
-                DatabaseHelper helper=new DatabaseHelper(getContext());
-                int res=helper.deleteSayan(id);
-                if(res==1){
-                    if(exchange){
-                        refresh(true);
-                    }else {
-                        refresh(false);
-                    }
-                    Toast.makeText(getContext(),"Deleted",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getContext(),"Fail",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addDailyAverage(amount.getText().toString());
+                dailyRefresh();
+                selectSpinner();
                 ad.dismiss();
-                Intent intent=new Intent(getContext(), UpdateActivity.class);
-                intent.putExtra("Id",id);
-                intent.putExtra("Category",category);
-                intent.putExtra("Type",type);
-                intent.putExtra("Title",title);
-                intent.putExtra("Amount",amount);
-                intent.putExtra("Date",date);
-                startActivity(intent);
-
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDailyAverage("0");
+                dailyRefresh();
+                selectSpinner();
+                ad.dismiss();
             }
         });
     }
-    public void Date(final TextView textView, View v){
-        final Calendar newCalendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @SuppressLint("SetTextI18n")
-            public void onDateSet(DatePicker view, int yearOfYear, int monthOfYear, int dayOfMonth) {
-                int month=(monthOfYear + 1);
-                dayOfFinal= dayOfMonth;
-                monthOfFinal=month;
-                yearOfFinal= yearOfYear;
-                if(!isZawgyiFont()){
-                    textView.setText(Rabbit.zg2uni(change(dayOfMonth +"")+"ရက္"+" ၊ "+change(yearOfYear +"")+"ႏွစ္"));
-                }else {
-                    textView.setText(change(dayOfMonth +"")+"ရက္"+" ၊ "+change(yearOfYear +"")+"ႏွစ္");
-                }
-                refresh(false);
-            }
-
-        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
-        datePickerDialog.show();
+    public void addDailyAverage(String average){
+        SharedPreferences preferences= requireActivity().getSharedPreferences("Daily",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        editor.putString("Average",average).apply();
+    }
+    public String getDailyAverage(){
+        SharedPreferences preferences= requireActivity().getSharedPreferences("Daily",Context.MODE_PRIVATE);
+        return preferences.getString("Average","0");
     }
     double income_ks=0,outcome_ks=0,profit_ks=0;
-    double daily_income=0,daily_outcome=0;
+    double daily_outcome=0;
     @SuppressLint({"SetTextI18n", "ResourceType"})
-    public void initialize(String str){
+    public void initialize(int select_day,int select_month,int select_year){
         try {
             DatabaseHelper helper = new DatabaseHelper(getContext());
             Cursor cursor=helper.getSayan();
@@ -260,11 +222,7 @@ public class HomeFragment extends Fragment {
                     int month = Integer.parseInt(date.split("/")[1]);
                     int year = Integer.parseInt(date.split("/")[2]);
 
-                    Calendar calendar=Calendar.getInstance();
-                    int cur_month=calendar.get(Calendar.MONTH)+1;
-                    int cur_year=calendar.get(Calendar.YEAR);
-
-                    if (cur_month == month && cur_year == year) {
+                    if (select_month == month && select_year == year) {
                         if(!isZawgyiFont()){
                             if(cursor.getString(1).equals(Rabbit.zg2uni("ဝင္ေငြ"))){
                                 income_ks+=Integer.parseInt(cursor.getString(4));
@@ -278,34 +236,25 @@ public class HomeFragment extends Fragment {
                                 outcome_ks+=Integer.parseInt(cursor.getString(4));
                             }
                         }
-
                     }
-                    if (dayOfFinal==day && monthOfFinal== month && yearOfFinal == year) {
+
+                    Calendar calendar=Calendar.getInstance();
+                    int cur_day=calendar.get(Calendar.DAY_OF_MONTH);
+                    int cur_month=calendar.get(Calendar.MONTH)+1;
+                    int cur_year=calendar.get(Calendar.YEAR);
+
+                    if (cur_day==day && cur_month== month && cur_year == year) {
                         if(!isZawgyiFont()){
-                            if(str.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
-                                if(cursor.getString(1).equals(Rabbit.zg2uni("ဝင္ေငြ"))){
-                                    daily_income+=Integer.parseInt(cursor.getString(4));
-                                }
-                            }else if(str.equals(Rabbit.zg2uni("ထြက္ေငြ"))){
-                                if(cursor.getString(1).equals(Rabbit.zg2uni("ထြက္ေငြ"))){
-                                    daily_outcome+=Integer.parseInt(cursor.getString(4));
-                                }
+                            if (cursor.getString(1).equals(Rabbit.zg2uni("ထြက္ေငြ"))) {
+                                daily_outcome += Integer.parseInt(cursor.getString(4));
                             }
                         }else {
-                            if(str.equals("ဝင္ေငြ")){
-                                if(cursor.getString(1).equals("ဝင္ေငြ")){
-                                    daily_income+=Integer.parseInt(cursor.getString(4));
-                                }
-                            }else if(str.equals("ထြက္ေငြ")){
-                                if(cursor.getString(1).equals("ထြက္ေငြ")){
-                                    daily_outcome+=Integer.parseInt(cursor.getString(4));
-                                }
+                            if(cursor.getString(1).equals("ထြက္ေငြ")){
+                                daily_outcome+=Integer.parseInt(cursor.getString(4));
                             }
                         }
                     }
-
                 }
-
             }
             Calendar calendar=Calendar.getInstance();
             int cur_day=calendar.get(Calendar.DAY_OF_MONTH);
@@ -313,42 +262,70 @@ public class HomeFragment extends Fragment {
             int cur_year=calendar.get(Calendar.YEAR);
             if(dayOfFinal==cur_day && monthOfFinal==cur_month && yearOfFinal==cur_year){
                 if(!isZawgyiFont()){
-                    if(str.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
-                        today_type.setText(Rabbit.zg2uni(requireContext().getResources().getString(R.string.today_income)));
-                        today_in_out.setText(change(daily_income+""));
-                    }else if(str.equals(Rabbit.zg2uni("ထြက္ေငြ"))){
-                        today_type.setText(Rabbit.zg2uni(requireContext().getResources().getString(R.string.today_outcome)));
-                        today_in_out.setText(change(daily_outcome+""));
-                    }
+                    daily_spend.setText(Rabbit.zg2uni(daily_spend.getText().toString()));
+                    daily_spend_ks.setText(Rabbit.zg2uni(change(daily_outcome+"")+"က်ပ္"));
                 }else {
-                    if(str.equals("ဝင္ေငြ")){
-                        today_type.setText(requireContext().getResources().getString(R.string.today_income));
-                        today_in_out.setText(change(daily_income+""));
-                    }else if(str.equals("ထြက္ေငြ")){
-                        today_type.setText(requireContext().getResources().getString(R.string.today_outcome));
-                        today_in_out.setText(change(daily_outcome+""));
-                    }
-                }
-            }else {
-                if(!isZawgyiFont()){
-                    if(str.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
-                        today_type.setText(today.getText()+" "+Rabbit.zg2uni(requireContext().getResources().getString(R.string.income)));
-                        today_in_out.setText(change(daily_income+""));
-                    }else if(str.equals(Rabbit.zg2uni("ထြက္ေငြ"))){
-                        today_type.setText(today.getText()+" "+Rabbit.zg2uni(requireContext().getResources().getString(R.string.outcome)));
-                        today_in_out.setText(change(daily_outcome+""));
-                    }
-                }else {
-                    if(str.equals("ဝင္ေငြ")){
-                        today_type.setText(today.getText()+" "+requireContext().getResources().getString(R.string.income));
-                        today_in_out.setText(change(daily_income+""));
-                    }else if(str.equals("ထြက္ေငြ")){
-                        today_type.setText(today.getText()+" "+requireContext().getResources().getString(R.string.outcome));
-                        today_in_out.setText(change(daily_outcome+""));
-                    }
+                    daily_spend.setText(daily_spend.getText().toString());
+                    daily_spend_ks.setText(change(daily_outcome+"")+"က်ပ္");
                 }
             }
-            daily_income=0;
+
+            double daily_average= Integer.parseInt(getDailyAverage());
+            double daily_ks= daily_average-daily_outcome;
+            if(daily_average>0){
+                progressBar.setMax((int)daily_average);
+            }else {
+                progressBar.setMax(0);
+            }
+
+            if (daily_outcome > 0){
+                ObjectAnimator.ofInt(progressBar, "progress", (int) daily_outcome)
+                        .setDuration(2000)
+                        .start();
+            }else {
+                progressBar.setProgress(0);
+            }
+
+            double per=(daily_outcome/daily_average)*100;
+
+            if(per>100){
+                percent_text.setText("Over");
+            }else {
+                percent_text.setText(per+"");
+            }
+
+            if(daily_outcome>daily_average){
+                over_layout.setVisibility(View.VISIBLE);
+                if(!isZawgyiFont()){
+                    daily_left.setText(Rabbit.zg2uni(daily_left.getText().toString()));
+                    daily_left_ks.setText("-"+Rabbit.zg2uni(change(daily_ks+"")+"က်ပ္"));
+                    over_ks.setText(Rabbit.zg2uni(change(daily_ks+"")+"က်ပ္"));
+                }else {
+                    daily_left.setText(daily_left.getText().toString());
+                    daily_left_ks.setText("-"+change(daily_ks+"")+"က်ပ္");
+                    over_ks.setText(change(daily_ks+"")+"က်ပ္");
+                }
+                daily_left_ks.setBackgroundColor(Color.RED);
+                daily_left_ks.setTextColor(Color.WHITE);
+            }else {
+                over_layout.setVisibility(View.GONE);
+                if(!isZawgyiFont()){
+                    daily_left.setText(Rabbit.zg2uni(daily_left.getText().toString()));
+                    daily_left_ks.setText(Rabbit.zg2uni(change(daily_ks+"")+"က်ပ္"));
+                }else {
+                    daily_left.setText(daily_left.getText().toString());
+                    daily_left_ks.setText(change(daily_ks+"")+"က်ပ္");
+                }
+            }
+
+            daily_outcome_detail.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onClick(View v) {
+                    dailyOutcomeDetail(v,t2.getText().toString(),daily_spend_ks.getText().toString());
+                }
+            });
+
             daily_outcome=0;
 
             profit_ks=income_ks-outcome_ks;
@@ -365,6 +342,24 @@ public class HomeFragment extends Fragment {
         }catch (Exception e){
             Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void dailyOutcomeDetail(View v, String s, String ks) {
+        View view = LayoutInflater.from(v.getContext()).inflate(R.layout.daily_outcome_detail, null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(v.getContext());
+        dialog.setContentView(view);
+        dialog.show();
+        TextView  daily_s=view.findViewById(R.id.daily_spend);
+        TextView  daily_sks=view.findViewById(R.id.daily_spend_ks);
+        if(!isZawgyiFont()){
+            daily_s.setText(Rabbit.zg2uni(daily_s.getText().toString()));
+        }
+        daily_sks.setText(ks);
+        RecyclerView  recyclerView=view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        dailyOutcomeData(s);
+        sayanAdapter=new SayanAdapter(getContext(),sayanData);
+        recyclerView.setAdapter(sayanAdapter);
     }
     public String change(String str){
         StringBuilder change_str = new StringBuilder();
@@ -405,11 +400,34 @@ public class HomeFragment extends Fragment {
         monthOfFinal=month;
         yearOfFinal=year;
         if(!isZawgyiFont()){
-            today.setText(Rabbit.zg2uni(change(day+"")+"ရက္"+" ၊ "+change(year+"")+"ႏွစ္"));
-            months.setText(Rabbit.zg2uni(monthChange(month)));
+            //today.setText(Rabbit.zg2uni(change(day+"")+"ရက္"+" ၊ "+change(year+"")+"ႏွစ္"));
+            months.setText(Rabbit.zg2uni(monthChange(month)+" ၊ "+change(day+"")+"ရက္"+" ၊ "+change(year+"")+"ႏွစ္"));
         }else {
-            today.setText(change(day+"")+"ရက္"+" ၊ "+change(year+"")+"ႏွစ္");
-            months.setText(monthChange(month));
+            //today.setText(change(day+"")+"ရက္"+" ၊ "+change(year+"")+"ႏွစ္");
+            months.setText(monthChange(month)+" ၊ "+change(day+"")+"ရက္"+" ၊ "+change(year+"")+"ႏွစ္");
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void dailyOutcomeData(String data){
+        try{
+            sayanData=new ArrayList<>();
+            DatabaseHelper helper=new DatabaseHelper(getContext());
+            Cursor cursor=helper.getSayan();
+            if(cursor.getCount() > 0){
+                while (cursor.moveToNext()){
+                    if(cursor.getString(1).equals(data)){
+                        String date=cursor.getString(5);
+                        int day= Integer.parseInt(date.split("/")[0]);
+                        int month= Integer.parseInt(date.split("/")[1]);
+                        int year= Integer.parseInt(date.split("/")[2]);
+                        if(dayOfFinal==day && monthOfFinal==month && yearOfFinal==year){
+                            sayanData.add(new SayanData(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5)));
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     public String monthChange(int ch){
@@ -441,60 +459,6 @@ public class HomeFragment extends Fragment {
                 change="ဒီဇင္ဘာလ";break;
         }
         return change;
-    }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @SuppressLint("ResourceAsColor")
-    public void refresh(boolean res){
-        change=res;
-        if(change){
-            outcome_change.setTextColor(R.color.colorWhite);
-            outcome_change.setBackgroundResource(R.color.colorIncome);
-            income_change.setBackgroundResource(R.color.colorTransparent);
-            if(!isZawgyiFont()){
-                refreshData(Rabbit.zg2uni("ထြက္ေငြ"));
-                initialize(Rabbit.zg2uni("ထြက္ေငြ"));
-            }else {
-                refreshData("ထြက္ေငြ");
-                initialize("ထြက္ေငြ");
-            }
-
-        }else {
-            income_change.setTextColor(R.color.colorWhite);
-            income_change.setBackgroundResource(R.color.colorIncome);
-            outcome_change.setBackgroundResource(R.color.colorTransparent);
-            if(!isZawgyiFont()){
-                refreshData(Rabbit.zg2uni("ဝင္ေငြ"));
-                initialize(Rabbit.zg2uni("ဝင္ေငြ"));
-            }else {
-                refreshData("ဝင္ေငြ");
-                initialize("ဝင္ေငြ");
-            }
-        }
-    }
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void refreshData(String data){
-        try{
-            sayanData=new ArrayList<>();
-            DatabaseHelper helper=new DatabaseHelper(getContext());
-            Cursor cursor=helper.getSayan();
-            if(cursor.getCount() > 0){
-                while (cursor.moveToNext()){
-                    if(cursor.getString(1).equals(data)){
-                        String date=cursor.getString(5);
-                        int day= Integer.parseInt(date.split("/")[0]);
-                        int month= Integer.parseInt(date.split("/")[1]);
-                        int year= Integer.parseInt(date.split("/")[2]);
-                        if(dayOfFinal==day && monthOfFinal==month && yearOfFinal==year){
-                            sayanData.add(new SayanData(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5)));
-                        }
-                    }
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        sayanAdapter=new SayanAdapter(getContext(),sayanData);
-        recyclerView.setAdapter(sayanAdapter);
     }
     public boolean isZawgyiFont(){
         SharedPreferences preferences= requireActivity().getSharedPreferences("Font", Context.MODE_PRIVATE);

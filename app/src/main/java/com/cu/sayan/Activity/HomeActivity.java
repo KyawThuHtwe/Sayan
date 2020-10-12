@@ -15,16 +15,31 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        if(isExist()){
+        if(isOnce()){
             finish();
-            startActivity(new Intent(getApplicationContext(),PasswordActivity.class));
-        }else{
-            finish();
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            Once(false);
+            startActivity(new Intent(getApplicationContext(),FontActivity.class));
+        }else {
+            if(isExist()){
+                finish();
+                startActivity(new Intent(getApplicationContext(),PasswordActivity.class));
+            }else{
+                finish();
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            }
         }
     }
     public boolean isExist(){
         SharedPreferences preferences=getSharedPreferences("Password", Context.MODE_PRIVATE);
         return preferences.getBoolean("Exit",false);
+    }
+    public void Once(boolean res){
+        SharedPreferences preferences=getSharedPreferences("Font", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        editor.putBoolean("Once",res).apply();
+    }
+    public boolean isOnce(){
+        SharedPreferences preferences=getSharedPreferences("Font", Context.MODE_PRIVATE);
+        return preferences.getBoolean("Once",true);
     }
 }

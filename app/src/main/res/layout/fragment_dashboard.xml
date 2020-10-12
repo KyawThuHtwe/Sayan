@@ -18,11 +18,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <androidx.cardview.widget.CardView
+                app:cardCornerRadius="@dimen/_10sdp"
                 android:layout_margin="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:id="@+id/layout"
+                    android:background="@color/colorTextSecondary"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -35,9 +36,9 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:id="@+id/sayan"
-                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
                             android:textColor="@color/colorTextPrimary"
-                            android:textSize="@dimen/_20sdp"
+                            android:textSize="@dimen/_16ssp"
                             android:text="@string/sayan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -58,14 +59,14 @@
                                 <RadioButton
                                     android:id="@+id/monthly"
                                     android:checked="true"
-                                    android:textSize="@dimen/_14ssp"
+                                    android:textSize="@dimen/_12ssp"
                                     android:layout_margin="@dimen/_10sdp"
                                     android:text="@string/monthly"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"/>
                                 <RadioButton
                                     android:id="@+id/yearly"
-                                    android:textSize="@dimen/_14ssp"
+                                    android:textSize="@dimen/_12ssp"
                                     android:layout_margin="@dimen/_10sdp"
                                     android:text="@string/yearly"
                                     android:layout_width="wrap_content"
@@ -82,6 +83,7 @@
                         android:layout_height="wrap_content"
                         tools:ignore="RtlHardcoded">
                         <LinearLayout
+                            android:backgroundTint="@color/colorPrimary"
                             android:background="@drawable/corner_radius_bound"
                             android:gravity="center"
                             android:layout_gravity="center"
@@ -93,19 +95,20 @@
                                 android:text="@string/month"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:textSize="@dimen/_14ssp" />
+                                android:textSize="@dimen/_12ssp" />
                         </LinearLayout>
                         <TextView
                             android:id="@+id/t1"
                             android:padding="@dimen/_5sdp"
                             android:textStyle="bold"
-                            android:textSize="@dimen/_14sdp"
+                            android:textSize="@dimen/_12ssp"
                             android:textColor="@color/colorTextPrimary"
                             android:text="@string/from"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
 
                         <LinearLayout
+                            android:backgroundTint="@color/colorPrimary"
                             android:background="@drawable/corner_radius_bound"
                             android:gravity="center"
                             android:layout_gravity="center"
@@ -117,12 +120,12 @@
                                 android:text="@string/month"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:textSize="@dimen/_14ssp" />
+                                android:textSize="@dimen/_12ssp" />
                         </LinearLayout>
                         <TextView
                             android:id="@+id/to"
                             android:textStyle="bold"
-                            android:textSize="@dimen/_14sdp"
+                            android:textSize="@dimen/_12ssp"
                             android:textColor="@color/colorTextPrimary"
                             android:padding="@dimen/_5sdp"
                             android:text="@string/to"
@@ -131,36 +134,32 @@
 
                     </LinearLayout>
                     <View
-                        android:layout_width="@dimen/_10sdp"
-                        android:layout_height="@dimen/_10sdp"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_15sdp"/>
                     <LinearLayout
-                        android:id="@+id/showHide"
-                        android:layout_margin="@dimen/_10sdp"
-                        android:gravity="center_vertical"
+                        android:background="@color/colorProfit"
+                        android:orientation="horizontal"
+                        android:gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:ignore="UseCompoundDrawables">
+                        tools:ignore="RtlHardcoded,UseCompoundDrawables">
                         <ImageView
-                            android:id="@+id/hide"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:src="@drawable/upward"
+                            android:src="@drawable/eye"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:tint="@color/colorIncome"
-                            android:contentDescription="@string/app_name" />
+                            android:contentDescription="@string/app_name"
+                            app:tint="@color/colorWhite" />
                         <TextView
                             android:id="@+id/submit"
-                            android:textSize="@dimen/_14ssp"
+                            android:paddingLeft="@dimen/_10sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:textSize="@dimen/_12ssp"
                             android:textColor="@color/colorWhite"
                             android:gravity="center"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:background="@drawable/corner_radius_bound"
                             android:text="@string/submit"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="@dimen/_30sdp"
-                            tools:ignore="UnusedAttribute" />
-                    </LinearLayout>
+                            tools:ignore="UnusedAttribute" />                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.recyclerview.widget.RecyclerView
@@ -184,14 +183,14 @@
                     <RadioButton
                         android:id="@+id/income"
                         android:checked="true"
-                        android:textSize="@dimen/_14ssp"
+                        android:textSize="@dimen/_12ssp"
                         android:layout_margin="@dimen/_10sdp"
                         android:text="@string/income"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <RadioButton
                         android:id="@+id/outcome"
-                        android:textSize="@dimen/_14ssp"
+                        android:textSize="@dimen/_12ssp"
                         android:layout_margin="@dimen/_10sdp"
                         android:text="@string/outcome"
                         android:layout_width="wrap_content"
@@ -200,7 +199,7 @@
                 <TextView
                     android:id="@+id/total"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/colorTextPrimary"
                     android:text="@string/total"
                     android:layout_width="wrap_content"
@@ -224,7 +223,7 @@
                 tools:ignore="RtlHardcoded">
                 <TextView
                     android:id="@+id/t2"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/colorWhite"
                     android:text="@string/profit"
                     android:layout_width="wrap_content"
@@ -232,7 +231,7 @@
                 <TextView
                     android:id="@+id/profit"
                     android:layout_marginLeft="@dimen/_15sdp"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     android:textColor="@color/colorWhite"
                     android:text="@string/profit"
                     android:layout_width="wrap_content"

@@ -39,6 +39,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     float setProgress_max=0;
     int monthOriginal,yearOriginal;
     int quest;
+    float pro;
 
     public ReportAdapter(Context context, ArrayList<TypeData> typeData,int monthOriginal, int yearOriginal,int quest) {
         this.context=context;
@@ -73,11 +74,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             income("ဝင္ေငြ",holder.progressBar);
         }
 
-        outcome(typeData.get(position).getCategory(),typeData.get(position).getType(),holder.progressBar,holder.type);
+        outcome(typeData.get(position).getCategory(),typeData.get(position).getType(),holder.progressBar,holder.type,holder.extra);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openBottomSheet(v,typeData.get(position).getType()+"",holder.progressBar.getProgress()+"",yearOriginal+"",monthOriginal+"");
+                openBottomSheet(v,typeData.get(position).getType()+"",holder.extra.getText().toString(),yearOriginal+"",monthOriginal+"");
             }
         });
     }
@@ -97,10 +98,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         if(!isZawgyiFont()){
             t1.setText(Rabbit.zg2uni(t1.getText().toString()));
             list_t.setText(Rabbit.zg2uni(list_t.getText().toString()));
-            amount.setText("("+change(value)+Rabbit.zg2uni("က်ပ္")+")");
-        }else {
-            amount.setText("("+change(value)+"က်ပ္"+")");
         }
+        amount.setText(value);
         list_t.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,10 +141,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                             }
                         }
                     }
-
                 }
             }
-            progressBar.setMax((int) setProgress_max);
+            if(setProgress_max>0){
+                progressBar.setMax((int) setProgress_max);
+            }else {
+                progressBar.setMax((int) setProgress_max);
+            }
             setProgress_max=0;
             helper.close();
         } catch (Exception e) {
@@ -154,7 +156,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
     }
     @SuppressLint("SetTextI18n")
-    public void outcome(String category, String type, final ProgressBar progressBar, TextView type_text) {
+    public void outcome(String category, String type, final ProgressBar progressBar, TextView type_text,TextView extra) {
         try {
             DatabaseHelper helper = new DatabaseHelper(context);
             Cursor res = helper.getSayan();
@@ -185,14 +187,16 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             }
             if (setProgress_value > 0){
                 ObjectAnimator.ofInt(progressBar, "progress", (int) setProgress_value)
-                        .setDuration(1000)
+                        .setDuration(2000)
                         .start();
             }else {
                 progressBar.setProgress((int) setProgress_value);
             }
             if(!isZawgyiFont()){
+                extra.setText("("+change(setProgress_value+"")+ Rabbit.zg2uni("က်ပ္")+")");
                 type_text.setText(type+"("+change(setProgress_value+"")+ Rabbit.zg2uni("က်ပ္")+")");
             }else {
+                extra.setText("("+change(setProgress_value+"")+"က်ပ္"+")");
                 type_text.setText(type+"("+change(setProgress_value+"")+"က်ပ္"+")");
             }
             setProgress_value=0;
@@ -239,12 +243,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         return typeData.size();
     }
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView type;
+        public TextView type,extra;
         public ProgressBar progressBar;
         public LinearLayout layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.type=itemView.findViewById(R.id.type);
+            this.extra=itemView.findViewById(R.id.extra);
             this.progressBar=itemView.findViewById(R.id.progress);
             this.layout=itemView.findViewById(R.id.layout);
         }

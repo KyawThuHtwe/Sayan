@@ -10,6 +10,11 @@
         android:name="com.cu.sayan.Fragment.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/navigation_daily"
+        android:name="com.cu.sayan.Fragment.DailyFragment"
+        android:label="@string/daily"
+        tools:layout="@layout/fragment_daily" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -20,6 +25,6 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.cu.sayan.Fragment.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/setting"
         tools:layout="@layout/fragment_notifications" />
 </navigation>

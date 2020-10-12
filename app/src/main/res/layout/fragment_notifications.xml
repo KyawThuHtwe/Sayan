@@ -17,38 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <androidx.cardview.widget.CardView
-                android:layout_margin="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:layout_margin="@dimen/_10sdp"
-                        android:src="@mipmap/ic_launcher"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:textSize="@dimen/_12ssp"
-                            android:textColor="@color/colorTextPrimary"
-                            android:text="@string/guest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                        <TextView
-                            android:textColor="@color/colorPrimary"
-                            android:text="@string/id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_1sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
@@ -56,6 +25,85 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
+                    android:background="#BCB5B5"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingRight="@dimen/_20ssp"
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_20ssp"
+                        android:paddingLeft="@dimen/_20sdp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:src="@drawable/account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:tint="@color/colorTextPrimary"
+                            android:contentDescription="@string/app_name" />
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"/>
+                        <TextView
+                            android:layout_weight="1"
+                            android:textSize="@dimen/_12ssp"
+                            android:textColor="@color/colorTextPrimary"
+                            android:text="@string/account"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/_25ssp"
+                            android:textColor="@color/colorTextSecondary"
+                            android:gravity="center"
+                            android:text="@string/g"
+                            android:backgroundTint="#2C45DF"
+                            android:background="@drawable/round_background"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"/>
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textSize="@dimen/_12ssp"
+                                android:textColor="@color/colorTextPrimary"
+                                android:text="@string/guest"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:textSize="@dimen/_12ssp"
+                                android:textColor="@color/colorPrimary"
+                                android:text="@string/id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:background="#BCB5B5"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -87,6 +135,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
+                    <View
+                        android:background="#C6BABA"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"/>
                     <LinearLayout
                         android:id="@+id/type"
                         android:background="?selectableItemBackground"
@@ -125,6 +177,11 @@
                             android:layout_height="wrap_content"/>
 
                     </LinearLayout>
+                    <View
+                        android:background="#C6BABA"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"/>
+
                     <LinearLayout
                         android:id="@+id/database"
                         android:background="?selectableItemBackground"
@@ -150,6 +207,10 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
+                    <View
+                        android:background="#C6BABA"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_2sdp"/>
 
                     <LinearLayout
                         android:id="@+id/language"
@@ -179,6 +240,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                app:cardCornerRadius="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_1sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
@@ -186,12 +248,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
+                    android:background="#BCB5B5"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
                         android:paddingRight="@dimen/_20ssp"
-                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_5sdp"
                         android:paddingTop="@dimen/_20ssp"
                         android:paddingLeft="@dimen/_20sdp"
                         android:gravity="center_vertical"
@@ -217,15 +280,18 @@
                     </LinearLayout>
                     <LinearLayout
                         android:orientation="horizontal"
-                        android:layout_marginLeft="@dimen/_20ssp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_10ssp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:ignore="RtlHardcoded">
                         <com.makeramen.roundedimageview.RoundedImageView
                             android:layout_margin="@dimen/_10sdp"
-                            android:src="@mipmap/ic_launcher"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            app:riv_corner_radius="50pt"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/dev"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"/>
                         <LinearLayout
                             android:gravity="center_vertical"
                             android:orientation="vertical"
@@ -238,6 +304,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"/>
                             <TextView
+                                android:textSize="@dimen/_12ssp"
                                 android:textColor="@color/colorPrimary"
                                 android:text="@string/copypaste673_gmail_com"
                                 android:layout_width="wrap_content"

@@ -171,6 +171,7 @@ public class UpdateActivity extends AppCompatActivity {
         DatabaseHelper helper=new DatabaseHelper(getApplicationContext());
         boolean res=helper.updateSayan(id+"",category+"",type+"",title+"",amount+"",date);
         if(res){
+            finish();
             Toast.makeText(getApplicationContext(),"Update",Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(getApplicationContext(),"Fail",Toast.LENGTH_SHORT).show();

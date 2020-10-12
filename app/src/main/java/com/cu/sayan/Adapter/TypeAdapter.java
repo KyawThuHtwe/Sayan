@@ -3,11 +3,13 @@ package com.cu.sayan.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import com.cu.sayan.Model.TypeData;
 import com.cu.sayan.R;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -44,6 +47,13 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
+        int min = 0;
+        int max = 255;
+        Random r = new Random();
+        final int r1 = r.nextInt(max - min) + min;
+        final int r2 = r.nextInt(max - min) + min;
+        final int r3 = r.nextInt(max - min) + min;
+        holder.layout.setBackgroundColor(Color.rgb(r1,r2,r3));
         holder.type.setText(typeData.get(position).getType());
         holder.more.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,10 +200,12 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView type;
         ImageView more;
+        LinearLayout layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.type=itemView.findViewById(R.id.type);
             this.more=itemView.findViewById(R.id.more);
+            this.layout=itemView.findViewById(R.id.layout);
         }
     }
 }
