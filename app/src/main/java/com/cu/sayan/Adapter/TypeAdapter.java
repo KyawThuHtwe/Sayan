@@ -31,6 +31,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
 
     Context context;
     ArrayList<TypeData> typeData;
+    Integer[] colors= new Integer[]{R.color.colorIncome,R.color.colorOutcome,R.color.colorProfit};
 
     public TypeAdapter(Context context, ArrayList<TypeData> typeData) {
         this.context=context;
@@ -47,6 +48,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
+        /*
         int min = 0;
         int max = 255;
         Random r = new Random();
@@ -54,6 +56,13 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
         final int r2 = r.nextInt(max - min) + min;
         final int r3 = r.nextInt(max - min) + min;
         holder.layout.setBackgroundColor(Color.rgb(r1,r2,r3));
+
+         */
+        int min = 0;
+        int max = colors.length;
+        Random r = new Random();
+        int i = r.nextInt(max - min) + min;
+        holder.layout.setBackgroundResource(colors[i]);
         holder.type.setText(typeData.get(position).getType());
         holder.more.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -272,6 +272,8 @@ public class DashboardFragment extends Fragment {
                 break;
         }
     }
+    double final_value=0;
+    String value_type;
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void refreshData(String data,int month,int year){
         try {
@@ -282,7 +284,41 @@ public class DashboardFragment extends Fragment {
             if (cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
                     if(cursor.getString(1).equals(data)){
-                        typeData.add(new TypeData(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+                        Cursor res=helper.getSayan();
+                        if(res.getCount()>0){
+                            while (res.moveToNext()){
+                                if(res.getString(1).equals(data) && cursor.getString(2).equals(res.getString(2))){
+                                    String date = res.getString(5);
+                                    int months = Integer.parseInt(date.split("/")[1]);
+                                    int years = Integer.parseInt(date.split("/")[2]);
+                                    if(monthly){
+                                        if (months==month && years == year) {
+                                            int value = Integer.parseInt(res.getString(4));
+                                            final_value += value;
+                                            if(final_value>0){
+                                                value_type=res.getString(2);
+                                            }
+                                            final_value=0;
+                                        }
+                                    }else {
+                                        if (years>=year && months <= year) {
+                                            int value = Integer.parseInt(res.getString(4));
+                                            final_value += value;
+                                            if(final_value>0){
+                                                value_type=res.getString(2);
+                                            }
+                                            final_value=0;
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                        if(value_type.equals(cursor.getString(2))){
+                            typeData.add(new TypeData(cursor.getString(0),cursor.getString(1),cursor.getString(2)));
+                        }
+                        final_value=0;
+
                     }
                 }
             }

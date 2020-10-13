@@ -43,12 +43,12 @@ public class SayanAdapter extends RecyclerView.Adapter<SayanAdapter.ViewHolder> 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-       /* int min = 0;
+        int min = 0;
         int max = colors.length;
         Random r = new Random();
         int i = r.nextInt(max - min) + min;
         holder.color.setBackgroundResource(colors[i]);
-        */
+       /*
         int min = 0;
         int max = 255;
         Random r = new Random();
@@ -56,6 +56,8 @@ public class SayanAdapter extends RecyclerView.Adapter<SayanAdapter.ViewHolder> 
         final int r2 = r.nextInt(max - min) + min;
         final int r3 = r.nextInt(max - min) + min;
         holder.color.setBackgroundColor(Color.rgb(r1,r2,r3));
+
+        */
         holder.type.setText(sayanData.get(position).getType());
         holder.title.setText(sayanData.get(position).getTitle());
 

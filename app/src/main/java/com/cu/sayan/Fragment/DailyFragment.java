@@ -128,6 +128,17 @@ public class DailyFragment extends Fragment {
             income_change.setText(Rabbit.zg2uni(income_change.getText().toString()));
             outcome_change.setText(Rabbit.zg2uni(outcome_change.getText().toString()));
         }
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy>0){
+                    floatingActionButton.hide();
+                }else {
+                    floatingActionButton.show();
+                }
+            }
+        });
         return view;
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

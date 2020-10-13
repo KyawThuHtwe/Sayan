@@ -63,10 +63,20 @@ public class ProfitAdapter extends RecyclerView.Adapter<ProfitAdapter.ViewHolder
         final int r1 = r.nextInt(max - min) + min;
         final int r2 = r.nextInt(max - min) + min;
         final int r3 = r.nextInt(max - min) + min;
-        holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.rgb(r1,r2,r3)));
+        //holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.rgb(r1,r2,r3)));
         if(!isZawgyiFont()){
+            if(arrayList.get(position).equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+            }else if(arrayList.get(position).equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+            }
             income(Rabbit.zg2uni("ဝင္ေငြ"),holder.progressBar);
         }else {
+            if(arrayList.get(position).equals("ဝင္ေငြ")){
+                holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+            }else if(arrayList.get(position).equals("ထြက္ေငြ")){
+                holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.YELLOW));
+            }
             income("ဝင္ေငြ",holder.progressBar);
         }
 

@@ -74,7 +74,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             income("ဝင္ေငြ",holder.progressBar);
         }
 
-        outcome(typeData.get(position).getCategory(),typeData.get(position).getType(),holder.progressBar,holder.type,holder.extra);
+        outcome(typeData.get(position).getCategory(),typeData.get(position).getType(),holder.progressBar,holder.type,holder.extra,holder.layout);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,6 +149,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 progressBar.setMax((int) setProgress_max);
             }
             setProgress_max=0;
+
             helper.close();
         } catch (Exception e) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -156,7 +157,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
     }
     @SuppressLint("SetTextI18n")
-    public void outcome(String category, String type, final ProgressBar progressBar, TextView type_text,TextView extra) {
+    public void outcome(String category, String type, final ProgressBar progressBar, TextView type_text,TextView extra,LinearLayout linearLayout) {
         try {
             DatabaseHelper helper = new DatabaseHelper(context);
             Cursor res = helper.getSayan();
@@ -186,11 +187,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 }
             }
             if (setProgress_value > 0){
+                linearLayout.setVisibility(View.VISIBLE);
                 ObjectAnimator.ofInt(progressBar, "progress", (int) setProgress_value)
                         .setDuration(2000)
                         .start();
-            }else {
-                progressBar.setProgress((int) setProgress_value);
+            }else{
+                linearLayout.setVisibility(View.GONE);
+                progressBar.setProgress((int)setProgress_value);
             }
             if(!isZawgyiFont()){
                 extra.setText("("+change(setProgress_value+"")+ Rabbit.zg2uni("က်ပ္")+")");
@@ -200,6 +203,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 type_text.setText(type+"("+change(setProgress_value+"")+"က်ပ္"+")");
             }
             setProgress_value=0;
+
             helper.close();
         } catch (Exception e) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
