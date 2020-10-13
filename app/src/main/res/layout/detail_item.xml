@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="?selectableItemBackground"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/color"
+        android:padding="@dimen/_10sdp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/title"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="@dimen/_12ssp"
+            android:text="@string/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/amount"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="@dimen/_12ssp"
+            android:text="@string/amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/date"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="@dimen/_12ssp"
+            android:text="@string/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <View
+        android:background="#E3DBDD"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_5sdp"/>
+
+</LinearLayout>

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cu.sayan.Adapter.DetailAdapter;
 import com.cu.sayan.Adapter.SayanAdapter;
 import com.cu.sayan.Database.DatabaseHelper;
 import com.cu.sayan.Model.SayanData;
@@ -27,7 +28,7 @@ public class DetailActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ArrayList<SayanData> sayanData;
-    SayanAdapter sayanAdapter;
+    DetailAdapter detailAdapter;
 
     @SuppressLint("RestrictedApi")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -46,12 +47,12 @@ public class DetailActivity extends AppCompatActivity {
         String from=intent.getStringExtra("From");
         String to=intent.getStringExtra("To");
         String quest=intent.getStringExtra("Quest");
-        getSupportActionBar().setTitle(type);
+        getSupportActionBar().setTitle(type+value);
         assert from != null;
         assert to != null;
         dataLoading(type,Integer.parseInt(from),Integer.parseInt(to),quest);
-        sayanAdapter=new SayanAdapter(getApplicationContext(),sayanData);
-        recyclerView.setAdapter(sayanAdapter);
+        detailAdapter=new DetailAdapter(getApplicationContext(),sayanData);
+        recyclerView.setAdapter(detailAdapter);
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void dataLoading(String type, int from, int to,String q){
