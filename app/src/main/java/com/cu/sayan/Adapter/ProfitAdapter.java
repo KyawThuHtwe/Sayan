@@ -154,7 +154,9 @@ public class ProfitAdapter extends RecyclerView.Adapter<ProfitAdapter.ViewHolder
                 ObjectAnimator.ofInt(progressBar, "progress", (int) setProgress_value)
                         .setDuration(2000)
                         .start();
+                //type_text.setVisibility(View.VISIBLE);
             }else {
+                //type_text.setVisibility(View.GONE);
                 progressBar.setProgress((int) setProgress_value);
             }
             if(!isZawgyiFont()){

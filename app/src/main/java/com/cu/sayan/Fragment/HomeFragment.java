@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import com.cu.sayan.Model.SayanData;
 import com.cu.sayan.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.objectweb.asm.Handle;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -335,7 +338,6 @@ public class HomeFragment extends Fragment {
             }else {
                 profit.setText(change(profit_ks+""));
             }
-
             income.setText(change(income_ks+""));
             outcome.setText(change(outcome_ks+""));
             income_ks=0;outcome_ks=0;

@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 typeData.add(new TypeData("12", "ထြက္ေငြ", "ဆိုင္ကယ္ဆီ"));
                 typeData.add(new TypeData("13", "ထြက္ေငြ", "အေထြေထြ"));
 //
+                typeData.add(new TypeData("14", "ဝင္ေငြ", "အျမတ္ေငြ"));
                 typeData.add(new TypeData("14", "ဝင္ေငြ", "လစာ"));
                 typeData.add(new TypeData("15", "ဝင္ေငြ", "ေဘာနပ္"));
                 typeData.add(new TypeData("16", "ဝင္ေငြ", "မုန္႔ဖိုး"));

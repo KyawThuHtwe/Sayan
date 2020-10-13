@@ -310,7 +310,6 @@ public class DashboardFragment extends Fragment {
                                             final_value=0;
                                         }
                                     }
-
                                 }
                             }
                         }
@@ -318,7 +317,6 @@ public class DashboardFragment extends Fragment {
                             typeData.add(new TypeData(cursor.getString(0),cursor.getString(1),cursor.getString(2)));
                         }
                         final_value=0;
-
                     }
                 }
             }
