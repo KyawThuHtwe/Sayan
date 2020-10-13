@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -23,6 +25,8 @@ import com.cu.sayan.Database.DatabaseHelper;
 import com.cu.sayan.Font.Rabbit;
 import com.cu.sayan.Model.TypeData;
 import com.cu.sayan.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,7 +52,11 @@ public class DashboardFragment extends Fragment {
     TextView submit,to;
     RadioGroup radioGroup;
     TextView total,profit;
+    FloatingActionButton floatingActionButton;
     boolean monthly=true;
+
+    //
+    TextView report_from,report_to;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SetTextI18n")
@@ -56,6 +64,8 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         profit=view.findViewById(R.id.profit);
+        report_from=view.findViewById(R.id.report_from);
+        report_to=view.findViewById(R.id.report_to);
         submit=view.findViewById(R.id.submit);
         to=view.findViewById(R.id.to);
         if(!isZawgyiFont()){
@@ -67,11 +77,15 @@ public class DashboardFragment extends Fragment {
             }
             TextView sayan=view.findViewById(R.id.sayan);
             TextView t1=view.findViewById(R.id.t1);
+            //
             TextView t2=view.findViewById(R.id.t2);
-            RadioButton monthly=view.findViewById(R.id.monthly);
-            RadioButton yearly=view.findViewById(R.id.yearly);
+            t2.setText(Rabbit.zg2uni(t2.getText().toString()));
             RadioButton income=view.findViewById(R.id.income);
             RadioButton outcome=view.findViewById(R.id.outcome);
+            //
+            RadioButton monthly=view.findViewById(R.id.monthly);
+            RadioButton yearly=view.findViewById(R.id.yearly);
+
             sayan.setText(Rabbit.zg2uni(sayan.getText().toString()));
             monthly.setText(Rabbit.zg2uni(monthly.getText().toString()));
             yearly.setText(Rabbit.zg2uni(yearly.getText().toString()));
@@ -79,12 +93,18 @@ public class DashboardFragment extends Fragment {
             outcome.setText(Rabbit.zg2uni(outcome.getText().toString()));
             submit.setText(Rabbit.zg2uni(submit.getText().toString()));
             t1.setText(Rabbit.zg2uni(t1.getText().toString()));
-            t2.setText(Rabbit.zg2uni(t2.getText().toString()));
             to.setText(Rabbit.zg2uni(to.getText().toString()));
         }
         monthSpinner=view.findViewById(R.id.monthSpinner);
         yearSpinner=view.findViewById(R.id.yearSpinner);
         total=view.findViewById(R.id.total);
+        floatingActionButton=view.findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView(v);
+            }
+        });
         spinner(true);
         Calendar calendar=Calendar.getInstance();
         final int month=calendar.get(Calendar.MONTH)+1;
@@ -219,7 +239,146 @@ public class DashboardFragment extends Fragment {
 
             }
         });
+        report_from.setText(yearSpinner.getSelectedItem().toString());
+        report_to.setText(monthSpinner.getSelectedItem().toString());
         return view;
+    }
+    boolean monthly_yearly=true;
+    private void searchView(View v) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(v.getContext()).inflate(R.layout.search_bottom_sheet, null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(v.getContext());
+        dialog.setContentView(view);
+        dialog.show();
+        ImageView close=view.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        final Spinner spinner1=view.findViewById(R.id.yearSpinner);
+        final Spinner spinner2=view.findViewById(R.id.monthSpinner);
+        final TextView t3=view.findViewById(R.id.to);
+        t3.setVisibility(View.GONE);
+        RadioGroup group=view.findViewById(R.id.radio);
+        Calendar calendar=Calendar.getInstance();
+        final int month=calendar.get(Calendar.MONTH)+1;
+        final int year=calendar.get(Calendar.YEAR);
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.monthly:
+                        monthly_yearly=true;
+                        monthly=true;
+                        spinnerAdd(spinner1,spinner2,true);
+                        t3.setVisibility(View.GONE);
+                        selectSpinnerMonth(month,spinner2);
+                        break;
+                    case R.id.yearly:
+                        monthly_yearly=false;
+                        monthly=false;
+                        spinnerAdd(spinner1,spinner2,false);
+                        t3.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
+        spinnerAdd(spinner1,spinner2,true);
+        selectSpinnerMonth(month,spinner2);
+        LinearLayout submit=view.findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                if(!isZawgyiFont()){
+                    int month_s=getMonth(Rabbit.uni2zg(spinner1.getSelectedItem()+""));
+                    int year_s= getYear(Rabbit.uni2zg(spinner2.getSelectedItem()+""));
+                    refreshData(Rabbit.zg2uni("ဝင္ေငြ"),month_s,year_s);
+                    if(monthly_yearly){
+                        totalMonthly(Rabbit.zg2uni("ဝင္ေငြ"),month_s,year_s);
+                    }else {
+                        totalYearly(Rabbit.zg2uni("ဝင္ေငြ"),month_s,year_s);
+                    }
+                }else {
+                    int year_s= getYear(spinner1.getSelectedItem()+"");
+                    int month_s=getMonth(spinner2.getSelectedItem()+"");
+                    refreshData("ဝင္ေငြ",month_s,year_s);
+                    if(monthly_yearly){
+                        totalMonthly("ဝင္ေငြ",month_s,year_s);
+                    }else {
+                        totalYearly("ဝင္ေငြ",month_s,year_s);
+                    }
+                    report_from.setText(spinner1.getSelectedItem().toString());
+                    report_to.setText(spinner2.getSelectedItem().toString());
+                }
+                dialog.dismiss();
+            }
+        });
+        if(!isZawgyiFont()){
+            TextView sayan=view.findViewById(R.id.sayan);
+            TextView t1=view.findViewById(R.id.t1);
+            TextView t2=view.findViewById(R.id.t2);
+            RadioButton monthly=view.findViewById(R.id.monthly);
+            RadioButton yearly=view.findViewById(R.id.yearly);
+            t2.setText(Rabbit.zg2uni(t2.getText().toString()));
+            t1.setText(Rabbit.zg2uni(t1.getText().toString()));
+            t3.setText(Rabbit.zg2uni(t3.getText().toString()));
+            sayan.setText(Rabbit.zg2uni(sayan.getText().toString()));
+            monthly.setText(Rabbit.zg2uni(monthly.getText().toString()));
+            yearly.setText(Rabbit.zg2uni(yearly.getText().toString()));
+        }
+    }
+    private void spinnerAdd(Spinner spinner1, Spinner spinner2, boolean monthly_yearly) {
+        ArrayAdapter spinnerAdapter1,spinnerAdapter2;
+        if(monthly_yearly){
+            spinnerAdapter2=new ArrayAdapter<>(requireContext(),android.R.layout.simple_spinner_dropdown_item,months);
+        }else {
+            spinnerAdapter2=new ArrayAdapter<>(requireContext(),android.R.layout.simple_spinner_dropdown_item,years);
+        }
+        spinnerAdapter1=new ArrayAdapter<>(requireContext(),android.R.layout.simple_spinner_dropdown_item,years);
+        spinner1.setAdapter(spinnerAdapter1);
+        spinner2.setAdapter(spinnerAdapter2);
+    }
+    public void selectSpinnerMonth(int month,Spinner spinner){
+        switch (month) {
+            case 1:
+                spinner.setSelection(0);
+                break;
+            case 2:
+                spinner.setSelection(1);
+                break;
+            case 3:
+                spinner.setSelection(2);
+                break;
+            case 4:
+                spinner.setSelection(3);
+                break;
+            case 5:
+                spinner.setSelection(4);
+                break;
+            case 6:
+                spinner.setSelection(5);
+                break;
+            case 7:
+                spinner.setSelection(6);
+                break;
+            case 8:
+                spinner.setSelection(7);
+                break;
+            case 9:
+                spinner.setSelection(8);
+                break;
+            case 10:
+                spinner.setSelection(9);
+                break;
+            case 11:
+                spinner.setSelection(10);
+                break;
+            case 12:
+                spinner.setSelection(11);
+                break;
+        }
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void spinner(boolean monthly){

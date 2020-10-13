@@ -12,6 +12,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -89,6 +90,13 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         final BottomSheetDialog dialog = new BottomSheetDialog(v.getContext());
         dialog.setContentView(view);
         dialog.show();
+        ImageView close=view.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         TextView type_t,list_t,amount,t1;
         type_t=view.findViewById(R.id.type);
         amount=view.findViewById(R.id.amount);

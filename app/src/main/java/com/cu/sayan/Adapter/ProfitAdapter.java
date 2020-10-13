@@ -57,6 +57,7 @@ public class ProfitAdapter extends RecyclerView.Adapter<ProfitAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
+        /*
         int min = 0;
         int max = 255;
         Random r = new Random();
@@ -64,11 +65,20 @@ public class ProfitAdapter extends RecyclerView.Adapter<ProfitAdapter.ViewHolder
         final int r2 = r.nextInt(max - min) + min;
         final int r3 = r.nextInt(max - min) + min;
         //holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.rgb(r1,r2,r3)));
+
+         */
+        // Get the Drawable custom_progressbar
+        /*
+        Drawable draw=res.getDrawable(R.drawable.custom_progressbar);
+        // set the drawable as progress drawable
+        progressBar.setProgressDrawable(draw);
+
+         */
         if(!isZawgyiFont()){
             if(arrayList.get(position).equals(Rabbit.zg2uni("ဝင္ေငြ"))){
                 holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
             }else if(arrayList.get(position).equals(Rabbit.zg2uni("ထြက္ေငြ"))){
-                holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+                holder.progressBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
             }
             income(Rabbit.zg2uni("ဝင္ေငြ"),holder.progressBar);
         }else {
@@ -154,9 +164,7 @@ public class ProfitAdapter extends RecyclerView.Adapter<ProfitAdapter.ViewHolder
                 ObjectAnimator.ofInt(progressBar, "progress", (int) setProgress_value)
                         .setDuration(2000)
                         .start();
-                //type_text.setVisibility(View.VISIBLE);
             }else {
-                //type_text.setVisibility(View.GONE);
                 progressBar.setProgress((int) setProgress_value);
             }
             if(!isZawgyiFont()){

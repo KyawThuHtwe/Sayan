@@ -6,263 +6,313 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Fragment.DashboardFragment">
-
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <LinearLayout
+        android:layout_height="match_parent">
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <androidx.cardview.widget.CardView
-                app:cardCornerRadius="@dimen/_10sdp"
-                android:layout_margin="@dimen/_10sdp"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:background="@color/colorTextSecondary"
-                    android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <androidx.cardview.widget.CardView
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:gravity="center_vertical"
-                        android:layout_gravity="center_vertical"
-                        android:orientation="horizontal"
+                        android:background="@color/colorTextSecondary"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/sayan"
+                                android:layout_marginLeft="@dimen/_15sdp"
+                                android:textColor="@color/colorTextPrimary"
+                                android:textSize="@dimen/_16ssp"
+                                android:text="@string/sayan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:ignore="RtlHardcoded" />
+                            <LinearLayout
+                                android:layout_marginRight="@dimen/_10sdp"
+                                android:gravity="right"
+                                android:layout_weight="1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                tools:ignore="RtlHardcoded">
+                                <RadioGroup
+                                    android:id="@+id/radio"
+                                    android:orientation="horizontal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    tools:ignore="UselessParent">
+                                    <RadioButton
+                                        android:id="@+id/monthly"
+                                        android:checked="true"
+                                        android:textSize="@dimen/_12ssp"
+                                        android:layout_margin="@dimen/_10sdp"
+                                        android:text="@string/monthly"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                    <RadioButton
+                                        android:id="@+id/yearly"
+                                        android:textSize="@dimen/_12ssp"
+                                        android:layout_margin="@dimen/_10sdp"
+                                        android:text="@string/yearly"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                </RadioGroup>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:ignore="RtlHardcoded">
+                            <LinearLayout
+                                android:backgroundTint="@color/colorPrimary"
+                                android:background="@drawable/corner_radius_bound"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="@dimen/_110sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                tools:ignore="UnusedAttribute">
+                                <Spinner
+                                    android:id="@+id/yearSpinner"
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:text="@string/month"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:textSize="@dimen/_12ssp" />
+                            </LinearLayout>
+                            <TextView
+                                android:id="@+id/t1"
+                                android:padding="@dimen/_5sdp"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/_12ssp"
+                                android:textColor="@color/colorTextPrimary"
+                                android:text="@string/from"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <LinearLayout
+                                android:backgroundTint="@color/colorPrimary"
+                                android:background="@drawable/corner_radius_bound"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:layout_width="@dimen/_110sdp"
+                                android:layout_height="@dimen/_30sdp"
+                                tools:ignore="UnusedAttribute">
+                                <Spinner
+                                    android:id="@+id/monthSpinner"
+                                    android:textColor="@color/colorTextPrimary"
+                                    android:text="@string/month"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:textSize="@dimen/_12ssp" />
+                            </LinearLayout>
+                            <TextView
+                                android:id="@+id/to"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/_12ssp"
+                                android:textColor="@color/colorTextPrimary"
+                                android:padding="@dimen/_5sdp"
+                                android:text="@string/to"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_15sdp"/>
+                        <LinearLayout
+                            android:background="@color/colorProfit"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:ignore="RtlHardcoded,UseCompoundDrawables">
+                            <ImageView
+                                android:src="@drawable/eye"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                app:tint="@color/colorWhite" />
+                            <TextView
+                                android:id="@+id/submit"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:paddingRight="@dimen/_10sdp"
+                                android:textSize="@dimen/_12ssp"
+                                android:textColor="@color/colorWhite"
+                                android:gravity="center"
+                                android:text="@string/submit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_30sdp"
+                                tools:ignore="UnusedAttribute" />                    </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
+                    <LinearLayout
+                        android:padding="@dimen/_15sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
-                            android:id="@+id/sayan"
-                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:id="@+id/report_from"
                             android:textColor="@color/colorTextPrimary"
-                            android:textSize="@dimen/_16ssp"
-                            android:text="@string/sayan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:ignore="RtlHardcoded" />
-                        <LinearLayout
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:gravity="right"
+                            android:textSize="@dimen/_14ssp"
                             android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            tools:ignore="RtlHardcoded">
-                            <RadioGroup
-                                android:id="@+id/radio"
-                                android:orientation="horizontal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                tools:ignore="UselessParent">
-                                <RadioButton
-                                    android:id="@+id/monthly"
-                                    android:checked="true"
-                                    android:textSize="@dimen/_12ssp"
-                                    android:layout_margin="@dimen/_10sdp"
-                                    android:text="@string/monthly"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
-                                <RadioButton
-                                    android:id="@+id/yearly"
-                                    android:textSize="@dimen/_12ssp"
-                                    android:layout_margin="@dimen/_10sdp"
-                                    android:text="@string/yearly"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
-                            </RadioGroup>
+                            android:text="@string/from"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:id="@+id/report_to"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="@dimen/_14ssp"
+                            android:gravity="right"
+                            android:layout_gravity="right"
+                            android:layout_weight="1"
+                            android:text="@string/to"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"/>
 
-                        </LinearLayout>
                     </LinearLayout>
-                    <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView1"
                         android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlHardcoded" />
+                    <LinearLayout
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_10ssp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_gravity="center_vertical"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:ignore="RtlHardcoded">
-                        <LinearLayout
-                            android:backgroundTint="@color/colorPrimary"
-                            android:background="@drawable/corner_radius_bound"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:layout_width="@dimen/_110sdp"
-                            android:layout_height="@dimen/_30sdp">
-                            <Spinner
-                                android:id="@+id/yearSpinner"
-                                android:textColor="@color/colorTextPrimary"
-                                android:text="@string/month"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:textSize="@dimen/_12ssp" />
-                        </LinearLayout>
+
                         <TextView
-                            android:id="@+id/t1"
-                            android:padding="@dimen/_5sdp"
-                            android:textStyle="bold"
+                            android:id="@+id/t2"
+                            android:layout_width="361dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:text="@string/profit"
+                            android:textColor="@color/colorTextPrimary"
+                            android:textSize="@dimen/_12ssp" />
+                        <TextView
+                            android:id="@+id/profit"
                             android:textSize="@dimen/_12ssp"
                             android:textColor="@color/colorTextPrimary"
-                            android:text="@string/from"
+                            android:text="@string/_0"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:backgroundTint="@color/colorPrimary"
-                            android:background="@drawable/corner_radius_bound"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:layout_width="@dimen/_110sdp"
-                            android:layout_height="@dimen/_30sdp">
-                            <Spinner
-                                android:id="@+id/monthSpinner"
-                                android:textColor="@color/colorTextPrimary"
-                                android:text="@string/month"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <View
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_alignParentRight="true"
+                            android:background="@color/colorTextPrimary"
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="@dimen/_250sdp"
+                            tools:ignore="RtlHardcoded" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerView"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_250sdp"/>
+                        <View
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_below="@+id/recyclerView"
+                            android:background="@color/colorTextPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"/>
+
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                            <RadioButton
+                                android:id="@+id/income"
+                                android:checked="true"
+                                android:textSize="@dimen/_12ssp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:text="@string/income"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:textSize="@dimen/_12ssp" />
-                        </LinearLayout>
+                                android:layout_height="wrap_content"/>
+                            <RadioButton
+                                android:id="@+id/outcome"
+                                android:textSize="@dimen/_12ssp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:text="@string/outcome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </RadioGroup>
                         <TextView
-                            android:id="@+id/to"
-                            android:textStyle="bold"
+                            android:id="@+id/total"
+                            android:layout_marginRight="@dimen/_10sdp"
                             android:textSize="@dimen/_12ssp"
                             android:textColor="@color/colorTextPrimary"
-                            android:padding="@dimen/_5sdp"
-                            android:text="@string/to"
+                            android:text="@string/total"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
+                            android:layout_height="wrap_content"
+                            tools:ignore="RtlHardcoded" />
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_15sdp"/>
-                    <LinearLayout
-                        android:background="@color/colorProfit"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:ignore="RtlHardcoded,UseCompoundDrawables">
-                        <ImageView
-                            android:src="@drawable/eye"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@string/app_name"
-                            app:tint="@color/colorWhite" />
-                        <TextView
-                            android:id="@+id/submit"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:paddingRight="@dimen/_10sdp"
-                            android:textSize="@dimen/_12ssp"
-                            android:textColor="@color/colorWhite"
-                            android:gravity="center"
-                            android:text="@string/submit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_30sdp"
-                            tools:ignore="UnusedAttribute" />                    </LinearLayout>
+                        android:layout_height="@dimen/_100sdp"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView1"
-                android:layout_marginLeft="@dimen/_15ssp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:ignore="RtlHardcoded" />
-            <LinearLayout
-                android:padding="@dimen/_5sdp"
-                android:background="@color/colorOutcome"
-                android:layout_marginLeft="@dimen/_15ssp"
-                android:gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="RtlHardcoded">
-                <TextView
-                    android:id="@+id/t2"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/colorWhite"
-                    android:text="@string/profit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/profit"
-                    android:layout_marginLeft="@dimen/_15sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/colorWhite"
-                    android:text="@string/profit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_10sdp"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <View
-                    android:layout_marginRight="@dimen/_7sdp"
-                    android:layout_alignParentRight="true"
-                    android:background="@color/colorTextPrimary"
-                    android:layout_width="@dimen/_2sdp"
-                    android:layout_height="@dimen/_250sdp"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_250sdp"/>
-                <View
-                    android:layout_marginLeft="@dimen/_7sdp"
-                    android:layout_marginRight="@dimen/_7sdp"
-                    android:layout_below="@+id/recyclerView"
-                    android:background="@color/colorTextPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_2sdp"/>
-
-            </RelativeLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-                    <RadioButton
-                        android:id="@+id/income"
-                        android:checked="true"
-                        android:textSize="@dimen/_12ssp"
-                        android:layout_margin="@dimen/_10sdp"
-                        android:text="@string/income"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <RadioButton
-                        android:id="@+id/outcome"
-                        android:textSize="@dimen/_12ssp"
-                        android:layout_margin="@dimen/_10sdp"
-                        android:text="@string/outcome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </RadioGroup>
-                <TextView
-                    android:id="@+id/total"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:textSize="@dimen/_12ssp"
-                    android:textColor="@color/colorTextPrimary"
-                    android:text="@string/total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:ignore="RtlHardcoded" />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_10sdp"/>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:src="@drawable/eye"
+            android:tint="@color/colorWhite"
+            android:layout_margin="@dimen/_15sdp"
+            android:layout_gravity="bottom|right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="RtlHardcoded" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </LinearLayout>

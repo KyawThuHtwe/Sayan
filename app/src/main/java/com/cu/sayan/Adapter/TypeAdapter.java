@@ -58,11 +58,6 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.ViewHolder> {
         holder.layout.setBackgroundColor(Color.rgb(r1,r2,r3));
 
          */
-        int min = 0;
-        int max = colors.length;
-        Random r = new Random();
-        int i = r.nextInt(max - min) + min;
-        holder.layout.setBackgroundResource(colors[i]);
         holder.type.setText(typeData.get(position).getType());
         holder.more.setOnClickListener(new View.OnClickListener() {
             @Override

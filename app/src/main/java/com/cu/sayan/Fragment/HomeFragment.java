@@ -98,6 +98,8 @@ public class HomeFragment extends Fragment {
         over_ks=view.findViewById(R.id.over_ks);
         daily_outcome_detail=view.findViewById(R.id.daily_outcome_detail);
         t2=view.findViewById(R.id.t2);
+        daily_left=view.findViewById(R.id.daily_left);
+        daily_spend=view.findViewById(R.id.daily_spend);
         initialMonthDate(month,today);
         if(!isZawgyiFont()){
             TextView t1=view.findViewById(R.id.t1);
@@ -117,12 +119,12 @@ public class HomeFragment extends Fragment {
             sayan.setText(Rabbit.zg2uni(sayan.getText().toString()));
             daily_average.setText(Rabbit.zg2uni(daily_average.getText().toString()));
             daily_over.setText(Rabbit.zg2uni(daily_over.getText().toString()));
+            daily_left.setText(Rabbit.zg2uni(daily_left.getText().toString()));
+            daily_spend.setText(Rabbit.zg2uni(daily_spend.getText().toString()));
         }
         final ImageView addDaily=view.findViewById(R.id.addDaily);
         average=view.findViewById(R.id.average);
-        daily_left=view.findViewById(R.id.daily_left);
         daily_left_ks=view.findViewById(R.id.daily_left_ks);
-        daily_spend=view.findViewById(R.id.daily_spend);
         daily_spend_ks=view.findViewById(R.id.daily_spend_ks);
         addDaily.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,9 +171,11 @@ public class HomeFragment extends Fragment {
         amount.setText(getDailyAverage());
         if(!isZawgyiFont()){
             TextView t1=view.findViewById(R.id.t1);
+            TextView t2=view.findViewById(R.id.t2);
             delete.setText(Rabbit.zg2uni(delete.getText().toString()));
             update.setText(Rabbit.zg2uni(update.getText().toString()));
             t1.setText(Rabbit.zg2uni(t1.getText().toString()));
+            t2.setText(Rabbit.zg2uni(t2.getText().toString()));
         }
         AlertDialog.Builder builder=new AlertDialog.Builder(requireContext());
         builder.setView(view);
@@ -289,22 +293,23 @@ public class HomeFragment extends Fragment {
                 progressBar.setProgress(0);
             }
 
-            double per=(daily_outcome/daily_average)*100;
-
-            if(per>100){
-                percent_text.setText("Over");
+            if(daily_average>0){
+                double per=(daily_outcome/daily_average)*100;
+                if(per>100){
+                    percent_text.setText("Over");
+                }else{
+                    percent_text.setText(per+"");
+                }
             }else {
-                percent_text.setText(per+"");
+                percent_text.setText("0.0");
             }
 
             if(daily_outcome>daily_average){
                 over_layout.setVisibility(View.VISIBLE);
                 if(!isZawgyiFont()){
-                    daily_left.setText(Rabbit.zg2uni(daily_left.getText().toString()));
                     daily_left_ks.setText("-"+Rabbit.zg2uni(change(daily_ks+"")+"က်ပ္"));
                     over_ks.setText(Rabbit.zg2uni(change(daily_ks+"")+"က်ပ္"));
                 }else {
-                    daily_left.setText(daily_left.getText().toString());
                     daily_left_ks.setText("-"+change(daily_ks+"")+"က်ပ္");
                     over_ks.setText(change(daily_ks+"")+"က်ပ္");
                 }
@@ -314,9 +319,9 @@ public class HomeFragment extends Fragment {
                 over_layout.setVisibility(View.GONE);
                 if(!isZawgyiFont()){
                     daily_left.setText(Rabbit.zg2uni(daily_left.getText().toString()));
+                    daily_spend.setText(Rabbit.zg2uni(daily_spend.getText().toString()));
                     daily_left_ks.setText(Rabbit.zg2uni(change(daily_ks+"")+"က်ပ္"));
                 }else {
-                    daily_left.setText(daily_left.getText().toString());
                     daily_left_ks.setText(change(daily_ks+"")+"က်ပ္");
                 }
             }

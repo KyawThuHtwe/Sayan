@@ -20,7 +20,6 @@
                 android:id="@+id/progress"
                 android:max="1000"
                 android:progress="100"
-                android:scaleY="50"
                 android:progressDrawable="@drawable/progressbar_rounded_corner"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"

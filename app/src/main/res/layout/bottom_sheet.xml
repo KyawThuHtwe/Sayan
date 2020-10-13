@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,45 +9,53 @@
     android:id="@+id/bottom">
 
     <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:padding="@dimen/_10sdp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
+        <LinearLayout
             android:padding="@dimen/_5sdp"
-            android:background="@color/colorTextPrimary"
-            android:id="@+id/type"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorWhite"
-            android:text="@string/type"
+            android:backgroundTint="#A5A0AC"
+            android:background="@drawable/corner_radius_bound"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:ignore="UnusedAttribute,UselessParent">
+            <ImageView
+                android:layout_marginRight="@dimen/_5sdp"
+                android:src="@drawable/monetization_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tint="@color/colorProfit"
+                android:contentDescription="@string/app_name"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/type"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/colorTextPrimary"
+                android:text="@string/type"
+                android:layout_marginRight="@dimen/_2sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
         <View
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_10sdp"/>
-        <LinearLayout
-            android:backgroundTint="@color/colorPrimary"
-            android:background="@drawable/corner_radius_bound"
-            android:gravity="center_vertical|right"
+            android:layout_height="10dp"/>
+        <ImageView
+            android:id="@+id/close"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:src="@drawable/close"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:src="@drawable/eye"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:tint="@color/colorTextPrimary" />
-
-            <TextView
-                android:textSize="@dimen/_12ssp"
-                android:textColor="@color/colorWhite"
-                android:padding="@dimen/_5sdp"
-                android:id="@+id/list"
-                android:text="@string/list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            app:tint="@color/colorTextPrimary"
+            android:contentDescription="@string/app_name"
+            tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
     <LinearLayout
@@ -55,13 +64,15 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/t1"
+            android:layout_marginLeft="@dimen/_5sdp"
             android:textSize="@dimen/_12ssp"
             android:textColor="@color/colorTextPrimary"
             android:paddingLeft="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp"
             android:text="@string/total"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <TextView
             android:id="@+id/amount"
@@ -71,6 +82,41 @@
             android:text="@string/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginRight="@dimen/_10sdp"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="RtlHardcoded">
+        <LinearLayout
+            android:padding="@dimen/_5sdp"
+            android:backgroundTint="@color/colorPrimary"
+            android:background="@drawable/corner_radius_bound"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="UnusedAttribute,UselessParent">
+            <ImageView
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:src="@drawable/eye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tint="@color/colorWhite"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:textSize="@dimen/_12ssp"
+                android:textColor="@color/colorWhite"
+                android:id="@+id/list"
+                android:text="@string/list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
     </LinearLayout>
 
