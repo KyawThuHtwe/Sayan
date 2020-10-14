@@ -326,6 +326,9 @@ public class HomeFragment extends Fragment {
                 daily_left_ks.setBackgroundColor(Color.RED);
                 daily_left_ks.setTextColor(Color.WHITE);
             }else {
+                daily_left_ks.setBackgroundResource(R.color.colorTransparent);
+                daily_left_ks.setTextColor(Color.BLACK);
+
                 over_layout.setVisibility(View.GONE);
                 if(!isZawgyiFont()){
                     daily_left.setText(Rabbit.zg2uni(daily_left.getText().toString()));
@@ -352,6 +355,7 @@ public class HomeFragment extends Fragment {
                 profit.setBackgroundColor(Color.RED);
             }else {
                 profit.setText(change(profit_ks+""));
+                profit.setBackgroundResource(R.color.colorTransparent);
             }
             income.setText(change(income_ks+""));
             outcome.setText(change(outcome_ks+""));
