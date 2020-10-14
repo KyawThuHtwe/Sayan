@@ -59,18 +59,35 @@ public class UpdateActivity extends AppCompatActivity {
         String get_title=intent.getStringExtra("Title");
         String get_amount=intent.getStringExtra("Amount");
         final String get_date=intent.getStringExtra("Date");
-        if(get_category.equals("ထြက္ေငြ")){
-            radioGroup.check(R.id.outcome);
-        }else if(get_category.equals("ဝင္ေငြ")){
-            radioGroup.check(R.id.income);
+        if(!isZawgyiFont()){
+            if(get_category.equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                radioGroup.check(R.id.outcome);
+            }else if(get_category.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                radioGroup.check(R.id.income);
+            }
+        }else{
+            if(get_category.equals("ထြက္ေငြ")){
+                radioGroup.check(R.id.outcome);
+            }else if(get_category.equals("ဝင္ေငြ")){
+                radioGroup.check(R.id.income);
+            }
         }
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(get_category.equals("ထြက္ေငြ")){
-                    radioGroup.check(R.id.outcome);
-                }else if(get_category.equals("ဝင္ေငြ")){
-                    radioGroup.check(R.id.income);
+                if(!isZawgyiFont()){
+                    if(get_category.equals(Rabbit.zg2uni("ထြက္ေငြ"))){
+                        radioGroup.check(R.id.outcome);
+                    }else if(get_category.equals(Rabbit.zg2uni("ဝင္ေငြ"))){
+                        radioGroup.check(R.id.income);
+                    }
+                }else {
+                    if(get_category.equals("ထြက္ေငြ")){
+                        radioGroup.check(R.id.outcome);
+                    }else if(get_category.equals("ဝင္ေငြ")){
+                        radioGroup.check(R.id.income);
+                    }
                 }
             }
         });
