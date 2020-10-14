@@ -63,6 +63,7 @@ public class DailyFragment extends Fragment {
     boolean change=false;
     int dayOfFinal,monthOfFinal,yearOfFinal;
     boolean exchange=false;
+    @SuppressLint({"ResourceAsColor", "NewApi"})
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -519,6 +520,7 @@ public class DailyFragment extends Fragment {
             pieChart.setData(pieData);
             pieChart.getDescription().setEnabled(false);
             pieChart.setCenterText("Sayan");
+            //pieChart.setUsePercentValues(true);
             Legend legend=pieChart.getLegend();
             legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
             legend.setOrientation(Legend.LegendOrientation.VERTICAL);
