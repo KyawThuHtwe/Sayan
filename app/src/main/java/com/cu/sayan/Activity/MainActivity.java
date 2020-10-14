@@ -69,12 +69,15 @@ public class MainActivity extends AppCompatActivity {
                 typeData.add(new TypeData("11", "ထြက္ေငြ", "ဆိုင္ကယ္"));
                 typeData.add(new TypeData("12", "ထြက္ေငြ", "ဆိုင္ကယ္ဆီ"));
                 typeData.add(new TypeData("13", "ထြက္ေငြ", "အေထြေထြ"));
+                typeData.add(new TypeData("14", "ထြက္ေငြ", "မီတာခ"));
+
 //
-                typeData.add(new TypeData("14", "ဝင္ေငြ", "အျမတ္ေငြ"));
-                typeData.add(new TypeData("14", "ဝင္ေငြ", "လစာ"));
-                typeData.add(new TypeData("15", "ဝင္ေငြ", "ေဘာနပ္"));
-                typeData.add(new TypeData("16", "ဝင္ေငြ", "မုန္႔ဖိုး"));
-                typeData.add(new TypeData("17", "ဝင္ေငြ", "အျခား"));
+                typeData.add(new TypeData("15", "ဝင္ေငြ", "အျမတ္ေငြ"));
+                typeData.add(new TypeData("16", "ဝင္ေငြ", "ေထာက္ပံ့ေၾကး"));
+                typeData.add(new TypeData("17", "ဝင္ေငြ", "လစာ"));
+                typeData.add(new TypeData("18", "ဝင္ေငြ", "ေဘာနပ္"));
+                typeData.add(new TypeData("19", "ဝင္ေငြ", "မုန္႔ဖိုး"));
+                typeData.add(new TypeData("20", "ဝင္ေငြ", "အျခား"));
                 for (int i = 0; i < typeData.size(); i++) {
                     if(!isZawgyiFont()){
                         insert(Rabbit.zg2uni(typeData.get(i).getCategory())+ "", Rabbit.zg2uni(typeData.get(i).getType()) + "");

@@ -432,7 +432,7 @@ public class DashboardFragment extends Fragment {
         }
     }
     double final_value=0;
-    String value_type;
+    String value_type=null;
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void refreshData(String data,int month,int year){
         try {
@@ -470,12 +470,13 @@ public class DashboardFragment extends Fragment {
                                         }
                                     }
                                 }
+
                             }
                         }
-                        if(value_type.equals(cursor.getString(2))){
+                        //Toast.makeText(getContext(),value_type,Toast.LENGTH_SHORT).show();
+                        if(cursor.getString(1).equals(data) && cursor.getString(2).equals(value_type)){
                             typeData.add(new TypeData(cursor.getString(0),cursor.getString(1),cursor.getString(2)));
                         }
-                        final_value=0;
                     }
                 }
             }

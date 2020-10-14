@@ -35,7 +35,17 @@ import com.cu.sayan.Database.DatabaseHelper;
 import com.cu.sayan.Font.Rabbit;
 import com.cu.sayan.Model.SayanData;
 import com.cu.sayan.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +53,8 @@ import java.util.Date;
 
 public class DailyFragment extends Fragment {
 
+    LinearLayout pieChartShow,listShow;
+    PieChart pieChart;
     RecyclerView recyclerView;
     SayanAdapter sayanAdapter;
     ArrayList<SayanData> sayanData;
@@ -70,6 +82,9 @@ public class DailyFragment extends Fragment {
         initialMonthDate(today);
         income_change=view.findViewById(R.id.income_change);
         outcome_change=view.findViewById(R.id.outcome_change);
+        //
+        pieChartShow=view.findViewById(R.id.pieChartShow);
+        pieChart=view.findViewById(R.id.pieChart);
         recyclerView=view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         refresh(false);
@@ -139,6 +154,32 @@ public class DailyFragment extends Fragment {
                 }
             }
         });
+
+        pieChartShow.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint({"NewApi", "ResourceType"})
+            @Override
+            public void onClick(View v) {
+                pieChart.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                pieChartShow.setBackgroundResource(R.drawable.corner_radius_bound);
+                pieChartShow.setBackgroundTintList(ColorStateList.valueOf(R.color.colorAccent));
+                listShow.setBackgroundResource(Color.TRANSPARENT);
+            }
+        });
+        listShow=view.findViewById(R.id.listShow);
+        listShow.setBackgroundTintList(ColorStateList.valueOf(R.color.colorAccent));
+        listShow.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint({"NewApi", "ResourceType"})
+            @Override
+            public void onClick(View v) {
+                recyclerView.setVisibility(View.VISIBLE);
+                pieChart.setVisibility(View.GONE);
+                listShow.setBackgroundResource(R.drawable.corner_radius_bound);
+                listShow.setBackgroundTintList(ColorStateList.valueOf(R.color.colorAccent));
+                pieChartShow.setBackgroundResource(Color.TRANSPARENT);
+            }
+        });
+
         return view;
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -407,7 +448,7 @@ public class DailyFragment extends Fragment {
         return change;
     }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint({"ResourceAsColor", "NewApi"})
     public void refresh(boolean res){
         change=res;
         if(change){
@@ -454,6 +495,56 @@ public class DailyFragment extends Fragment {
                     }
                 }
             }
+            ArrayList<PieEntry> entries=new ArrayList<>();
+            entries.clear();
+            Cursor s=helper.getSayan();
+            if(s.getCount()>0){
+                while (s.moveToNext()){
+                    if(s.getString(1).equals(data)){
+                        String date=s.getString(5);
+                        int day= Integer.parseInt(date.split("/")[0]);
+                        int month= Integer.parseInt(date.split("/")[1]);
+                        int year= Integer.parseInt(date.split("/")[2]);
+                        if(dayOfFinal==day && monthOfFinal==month && yearOfFinal==year){
+                            entries.add(new PieEntry(Float.parseFloat(s.getString(4)),s.getString(2)));
+                        }
+                    }
+                }
+            }
+            PieDataSet pieDataSet=new PieDataSet(entries,"Sayan");
+            pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+            pieDataSet.setValueTextColor(Color.BLACK);
+            pieDataSet.setValueTextSize(12f);
+            PieData pieData=new PieData(pieDataSet);
+            pieChart.setData(pieData);
+            pieChart.getDescription().setEnabled(false);
+            pieChart.setCenterText("Sayan");
+            Legend legend=pieChart.getLegend();
+            legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+            legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+            legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+
+            pieChart.animateXY(1400,1400);
+            pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                @Override
+                public void onValueSelected(Entry e, Highlight h) {
+                    PieEntry pe=(PieEntry) e;
+                    if(!isZawgyiFont()){
+                        pieChart.setCenterText(pe.getLabel()+"\n"+pe.getValue()+Rabbit.zg2uni("က်ပ္"));
+                    }else{
+                        pieChart.setCenterText(pe.getLabel()+"\n"+pe.getValue()+"က်ပ္");
+                    }
+                    //Snackbar.make(getView() ,pe.getLabel()+pe.getValue() ,Snackbar.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onNothingSelected() {
+
+                }
+            });
+            //pieChart.animate();
+
+
         }catch (Exception e){
             e.printStackTrace();
         }
